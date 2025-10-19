@@ -9,7 +9,6 @@ import {
 import { Button } from '@/components/Button'
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,

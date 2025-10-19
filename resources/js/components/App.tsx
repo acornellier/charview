@@ -16,7 +16,7 @@ export function App() {
   return (
     <div className="px-4 max-w-[750px] mx-auto py-10">
       <div className="flex justify-between">
-        <h1 className="text-2xl mb-2 font-bold">Ortemis' Parse Viewer</h1>
+        <h1 className="text-2xl mb-2 font-bold">Ortemis{"'"} Parse Viewer</h1>
         <ModeToggle />
       </div>
       <CharInput setParses={setParses} />

@@ -37,6 +37,7 @@ export function ParseView({ parse }: Props) {
           className="text-blue-500"
           href={`https://warcraftlogs.com/reports/${parse.reportID}#fight=${parse.fightID}&type=damage-done`}
           target="_blank"
+          rel="noreferrer"
         >
           View in WarcraftLogs
         </a>
@@ -61,6 +62,7 @@ export function ParseView({ parse }: Props) {
                     style={{ color: rarityColors[item.quality] }}
                     href={`https://www.wowhead.com/item=${item.id}?bonus=${item.bonusIDs?.join(':')}`}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     {item.name}
                   </a>
@@ -73,6 +75,7 @@ export function ParseView({ parse }: Props) {
                         className="flex gap-1 cursor-pointer"
                         href={`https://www.wowhead.com/item=${gem.id}`}
                         target="_blank"
+                        rel="noreferrer"
                       >
                         {'‎ '}
                       </a>

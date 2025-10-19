@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 
-export function useLocalStorage<T>(key: string, defaultValue: T, json: boolean = true) {
+export function useLocalStorage<T>(
+  key: string,
+  defaultValue: T,
+  json: boolean = true,
+) {
   const [value, setValue] = useState<T>(() => {
     let currentValue
 
@@ -8,8 +12,8 @@ export function useLocalStorage<T>(key: string, defaultValue: T, json: boolean =
       const storedValue = localStorage.getItem(key)
       currentValue = json
         ? (JSON.parse(storedValue ?? String(defaultValue)) as T)
-        : (storedValue as T) ?? defaultValue
-    } catch (error) {
+        : ((storedValue as T) ?? defaultValue)
+    } catch {
       currentValue = defaultValue
     }
 
