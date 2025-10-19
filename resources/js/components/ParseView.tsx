@@ -18,7 +18,6 @@ interface Props {
 export function ParseView({ parse }: Props) {
   const classColor = classColors[parse.class] || '#FFFFFF'
 
-  console.log(parse)
   return (
     <div className="flex flex-col gap-1">
       <div className="flex gap-2 items-center justify-between mb-2">
