@@ -12,10 +12,10 @@ Connects to Blizzard and WarcraftLogs APIs to show a character's latest parse.
 
 Install
 ```bash
-composer install
 yarn
-
+composer install
 cp .env.example .env
+php artisan key:generate
 ```
 
 Edit `.env`
