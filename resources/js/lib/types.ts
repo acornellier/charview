@@ -1,3 +1,6 @@
+import type { z } from 'zod'
+import type { WclCharRequest } from '@/schema'
+
 export const regions = ['US', 'EU', 'KR', 'TW'] as const
 
 export type Region = (typeof regions)[number]
@@ -19,8 +22,18 @@ export const rarityColors: Record<Rarity, string> = {
   artifact: '#e6cc80',
 }
 
+export interface PhpSuccess<T> {
+  status: 'success'
+  data: T
+}
+
 export interface PhpError {
   status: 'error'
+  type?: 'validation'
   message: string
-  errors: Record<string, string[]>
+  errors?: Record<string, string[]>
 }
+
+export type PhpResponse<T> = PhpSuccess<T> | PhpError
+
+export type WclCharRequestType = z.infer<typeof WclCharRequest>

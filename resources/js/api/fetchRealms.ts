@@ -1,4 +1,4 @@
-import type { Region } from '@/lib/types'
+import type { PhpSuccess, Region } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import type { DefaultError } from '@tanstack/query-core'
 
@@ -13,11 +13,11 @@ interface Response {
 }
 
 export function useRealms(region: Region) {
-  return useQuery<Response, DefaultError, BlizzardRealm[]>({
+  return useQuery<PhpSuccess<Response>, DefaultError, BlizzardRealm[]>({
     queryKey: ['realms', region],
     queryFn: () => fetchRealms(region),
     staleTime: 60 * 60 * 24, // 24 hours
-    select: (data) => data.realms,
+    select: (data) => data.data.realms,
   })
 }
 

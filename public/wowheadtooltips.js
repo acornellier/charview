@@ -9,8 +9,8 @@ window.WH = new (function () {
   this.PageMeta = {}
   const e = { resizeEventObserver: undefined }
   this.defineEnum = function (e, t) {
-    let a = {}
-    let i = []
+    const a = {}
+    const i = []
     Object.keys(e).forEach((n) => {
       a[n] = t ? new t(a) : {}
       a[n].name = n
@@ -21,7 +21,7 @@ window.WH = new (function () {
     a.cases = () => i.slice()
     a.tryFrom = (e) => i.find((t) => t.value === e)
     a.from = (e) => {
-      let t = a.tryFrom(e)
+      const t = a.tryFrom(e)
       if (!t) {
         throw new Error(
           `Value ${e} is not a valid backing value for this enum.`,
@@ -177,7 +177,7 @@ WH.Timewalking = new (function () {
     return t
   }
   this.getCharLevelFromIlvl = function (t) {
-    for (let a of e.getConfigs()) {
+    for (const a of e.getConfigs()) {
       if (a.gearIlvl === t) {
         return a.charLevel
       }
@@ -185,7 +185,7 @@ WH.Timewalking = new (function () {
     return null
   }
   this.getGearIlvlByStringId = function (t) {
-    for (let a of e.getConfigs()) {
+    for (const a of e.getConfigs()) {
       if (a.stringId === t) {
         return a.gearIlvl
       }
@@ -568,7 +568,7 @@ WH.Types = new (function () {
   }
   this.getDetailPageName = (e) => (t[e] || [])[0] || i[e]
   this.getHistoricalDetailPageNames = (e) => {
-    let a = t[e] || (i[e] && [i[e]])
+    const a = t[e] || (i[e] && [i[e]])
     if (!a) {
       throw new Error(
         `The given type has no detail pages or string IDs. [${e}]`,
@@ -577,14 +577,14 @@ WH.Types = new (function () {
     return a
   }
   this.getGame = (t) => {
-    let a = (e.getRequiredTrees(t) || [])[0]
+    const a = (e.getRequiredTrees(t) || [])[0]
     return a ? WH.Game.getByTree(a) : undefined
   }
   this.getGameWowTypes = function () {
     return a.slice()
   }
   this.getPreferredDataEnv = function (e) {
-    let t = WH.Types.getRequiredTrees(e)
+    const t = WH.Types.getRequiredTrees(e)
     if (t) {
       return t.includes(WH.getDataTree())
         ? WH.getDataEnv()
@@ -595,9 +595,9 @@ WH.Types = new (function () {
     return i[e]
   }
   this.getRequiredTrees = function (e) {
-    let t = []
+    const t = []
     let a = false
-    for (let i in n) {
+    for (const i in n) {
       if (!n.hasOwnProperty(i)) {
         continue
       }
@@ -667,7 +667,7 @@ WH.warn = function (e) {
     if (e.hasOwnProperty(t)) {
       return e[t]
     }
-    let a = document.querySelector(('script#data.' + t).replace(/\./g, '\\.'))
+    const a = document.querySelector(('script#data.' + t).replace(/\./g, '\\.'))
     if (a) {
       return JSON.parse(a.innerHTML)
     }
@@ -740,14 +740,16 @@ WH.term = function (e) {
   if (!WH.TERMS) {
     return e
   }
-  let t = [WH.TERMS[e]].concat(Array.prototype.slice.call(arguments, 1))
+  const t = [WH.TERMS[e]].concat(Array.prototype.slice.call(arguments, 1))
   return WH.Strings.sprintf.apply(null, t)
 }
 WH.wowTerm = function (e) {
   if (!WH.GlobalStrings) {
     return e
   }
-  let t = [WH.GlobalStrings[e]].concat(Array.prototype.slice.call(arguments, 1))
+  const t = [WH.GlobalStrings[e]].concat(
+    Array.prototype.slice.call(arguments, 1),
+  )
   return WH.Strings.sprintf.apply(null, t)
 }
 WH.htmlEntities = function (e) {
@@ -756,7 +758,7 @@ WH.htmlEntities = function (e) {
   })
 }
 WH.stub = function (e) {
-  let t = e.split('.')
+  const t = e.split('.')
   let a = WH
   for (let e = 0, i; (i = t[e]); e++) {
     if (!a[i]) {
@@ -996,7 +998,7 @@ WH.aE = function (e, t, a, i) {
   }
   t = typeof t === 'string' ? [t] : t
   for (let n = 0; n < e.length; n++) {
-    for (let s of t) {
+    for (const s of t) {
       if (s === 'resize') {
         WH.triggerResizeEvents(e[n])
       }
@@ -1221,20 +1223,20 @@ WH.ac = function (e, t) {
     t = true
   }
   if (t) {
-    let e = WH.getScroll()
+    const e = WH.getScroll()
     a += e.x
     i += e.y
   }
-  let n = [a, i]
+  const n = [a, i]
   n.x = a
   n.y = i
   return n
 }
 WH.getOffset = function (e, t) {
-  let a = e.getBoundingClientRect()
-  let i = { left: a.left, top: a.top }
+  const a = e.getBoundingClientRect()
+  const i = { left: a.left, top: a.top }
   if (t !== true) {
-    let e = WH.getScroll()
+    const e = WH.getScroll()
     i.left += e.x
     i.top += e.y
   }
@@ -1243,7 +1245,7 @@ WH.getOffset = function (e, t) {
 WH.scrollTo = function (e, t) {
   t = t || {}
   if (typeof e === 'string') {
-    let t = document.querySelector(e)
+    const t = document.querySelector(e)
     if (!t) {
       WH.error('Could not select element to scroll to.', e)
       return
@@ -1255,8 +1257,8 @@ WH.scrollTo = function (e, t) {
     return
   }
   if (t.asNeeded) {
-    let a = e.getBoundingClientRect()
-    let i = t.position === 'center' ? 10 : 0
+    const a = e.getBoundingClientRect()
+    const i = t.position === 'center' ? 10 : 0
     if (
       a.top >= WH.Layout.getHeaderBottom() + i &&
       ((t.allowScrollingDown ?? true)
@@ -1274,7 +1276,7 @@ WH.scrollTo = function (e, t) {
   })
 }
 WH.isElementPositionFixedOrSticky = (e) => {
-  let t = ['fixed', 'sticky']
+  const t = ['fixed', 'sticky']
   while (e && e.nodeType === Node.ELEMENT_NODE) {
     if (t.includes(getComputedStyle(e).position)) {
       return true
@@ -1320,16 +1322,16 @@ WH.getDomainFromLocale = function (e) {
   return t[e] ? t[e] : ''
 }
 WH.fetch = (function () {
-  let e = function (e) {
-    let t = []
-    for (let a in e) {
+  const e = function (e) {
+    const t = []
+    for (const a in e) {
       if (e.hasOwnProperty(a)) {
         t.push(encodeURIComponent(a) + '=' + encodeURIComponent(e[a]))
       }
     }
     return t.join('&')
   }
-  let t = function (e) {
+  const t = function (e) {
     if (e.contentType) {
       return e.contentType
     }
@@ -1345,10 +1347,10 @@ WH.fetch = (function () {
     return undefined
   }
   if (typeof window.fetch !== 'function') {
-    let a = function (e, t, a) {
-      let i = this
+    const a = function (e, t, a) {
+      const i = this
       let n = i.responseText
-      let s =
+      const s =
         (i.getResponseHeader('content-type') || '').indexOf(
           'application/json',
         ) === 0
@@ -1377,10 +1379,10 @@ WH.fetch = (function () {
         t.complete(n, i.status)
       }
     }
-    let i = function (e, t, a) {
-      let i = this
-      let n = 'Legacy WH.fetch call could not complete.'
-      let s = i.responseText || undefined
+    const i = function (e, t, a) {
+      const i = this
+      const n = 'Legacy WH.fetch call could not complete.'
+      const s = i.responseText || undefined
       WH.error(n, e, i.status, i.responseText, i)
       if (t.error) {
         t.error(s, i.status)
@@ -1398,12 +1400,12 @@ WH.fetch = (function () {
       if (s.hasOwnProperty('data') || typeof s.body === 'string') {
         r = s.method || 'POST'
       }
-      let o = new XMLHttpRequest()
+      const o = new XMLHttpRequest()
       WH.aE(o, 'load', a.bind(o, n, s))
       WH.aE(o, 'error', i.bind(o, n, s))
       o.overrideMimeType('text/plain')
       o.open(r, n, true)
-      let l = t(s)
+      const l = t(s)
       if (l) {
         o.setRequestHeader('Content-Type', l)
       }
@@ -1418,7 +1420,7 @@ WH.fetch = (function () {
       }
     }
   }
-  let a = function (e, t, a, i) {
+  const a = function (e, t, a, i) {
     if (!a.ok) {
       WH.error('WH.fetch call got a bad response code.', e, a.status, i, a)
       if (t.error) {
@@ -1433,8 +1435,8 @@ WH.fetch = (function () {
       t.complete(i, a.status)
     }
   }
-  let i = function (e, t, a, i) {
-    let n =
+  const i = function (e, t, a, i) {
+    const n =
       'Could not process WH.fetch response, callback errored. ' + i.message
     WH.error(n, e, a.status, '', a)
     if (t.error) {
@@ -1444,15 +1446,15 @@ WH.fetch = (function () {
       t.complete(undefined, a.status)
     }
   }
-  let n = function (e, t, n) {
-    let s =
+  const n = function (e, t, n) {
+    const s =
       (n.headers.get('content-type') || '').indexOf('application/json') === 0
     ;(s ? n.json() : n.text())
       .then(a.bind(null, e, t, n))
       ['catch'](i.bind(null, e, t, n))
   }
-  let s = function (e, t, a) {
-    let i = 'WH.fetch call could not complete. ' + a.message
+  const s = function (e, t, a) {
+    const i = 'WH.fetch call could not complete. ' + a.message
     WH.error(i, e, 0, '', a)
     if (t.error) {
       t.error(undefined, 0, a.message)
@@ -1466,14 +1468,14 @@ WH.fetch = (function () {
     if (i.query) {
       a += (a.indexOf('?') > -1 ? '&' : '?') + WH.Url.buildQuery(i.query)
     }
-    let r = typeof i.cookies === 'boolean' ? i.cookies : true
-    let o = {
+    const r = typeof i.cookies === 'boolean' ? i.cookies : true
+    const o = {
       credentials: r ? 'same-origin' : 'omit',
       headers: new Headers(),
       method: i.method || 'GET',
       mode: i.mode || 'same-origin',
     }
-    let l = t(i)
+    const l = t(i)
     if (l) {
       o.headers.set('Content-Type', l)
     }
@@ -1645,7 +1647,7 @@ WH.getDataEnv = function () {
     : WH.dataEnv.MAIN
 }
 WH.getDataEnvFromKey = function (e) {
-  for (let t in WH.dataEnvKey) {
+  for (const t in WH.dataEnvKey) {
     if (WH.dataEnvKey[t] === e) {
       return parseInt(t)
     }
@@ -1788,8 +1790,8 @@ WH.getScreenshotUrl = function (e, t, a) {
 WH.maxLevel = WH.maxLevel || 70
 WH.maxSkill = WH.maxSkill || 900
 WH.convertRatingToPercent = function (e, t, a, i) {
-  let n = (WH.convertRatingToPercent.LT || {})[t] || {}
-  let s = WH.findSparseKey(n, e)
+  const n = (WH.convertRatingToPercent.LT || {})[t] || {}
+  const s = WH.findSparseKey(n, e)
   let r = n[s] || 0
   if (i != null && WH.isWrathTree() && !WH.isRemote()) {
     const e = WH.Wow.Item.Stat
@@ -1947,8 +1949,8 @@ WH.convertScalingFactor = function (e, t, a, i, n) {
   if (!d || !(i >= 0 && i < o)) {
     l.v = c[t]
   } else {
-    let e = WH.findSparseKey(d, i)
-    let a = WH.findSparseKey(d, i + o)
+    const e = WH.findSparseKey(d, i)
+    const a = WH.findSparseKey(d, i + o)
     l.n = WH.statToJson[d[e]]
     l.s = d[e]
     l.v = Math.floor((c[t] * d[a]) / 1e4)
@@ -1956,7 +1958,7 @@ WH.convertScalingFactor = function (e, t, a, i, n) {
   return n ? l : l.v
 }
 WH.getScalingDistributionCurve = function (e) {
-  let t = ((WH.convertScalingFactor.SD || {}).curves || {})[e]
+  const t = ((WH.convertScalingFactor.SD || {}).curves || {})[e]
   return t ? { minLevel: t[0], maxLevel: t[1], curve: t[2] } : undefined
 }
 g_itemScalingCallbacks = []
@@ -1979,12 +1981,12 @@ WH.getSpellScalingIndexFromScalingClass = function (e, t) {
   return e
 }
 WH.effectAverage = function (e, t, a, i) {
-  let n = WH.convertScalingSpell.RandPropPoints
+  const n = WH.convertScalingSpell.RandPropPoints
   let s = e['scalingClass']
   if (e['effectScalingClass'] && (e['effectScalingClass']?.[i] ?? 0) != 0) {
     s = e['effectScalingClass'][i]
   }
-  let r = e['coefficient'][i] ?? e['coefficient'][0] ?? 0
+  const r = e['coefficient'][i] ?? e['coefficient'][0] ?? 0
   let o = 1
   let l = 0
   if (r != 0 && s != 0) {
@@ -1997,7 +1999,7 @@ WH.effectAverage = function (e, t, a, i) {
         l = n[a][1]
       }
     } else {
-      let e = WH.getSpellScalingIndexFromScalingClass(s)
+      const e = WH.getSpellScalingIndexFromScalingClass(s)
       l = WH.convertScalingSpell.SV[t][e - 1]
     }
     if (
@@ -2224,8 +2226,8 @@ WH.setJsonItemLevel = function (e, t, a) {
   }
 }
 WH.getContentTuningLevels = function (e) {
-  let t = (WH.contentTuningLevels || {}).keys || {}
-  let a = Object.keys(t).find(function (a) {
+  const t = (WH.contentTuningLevels || {}).keys || {}
+  const a = Object.keys(t).find(function (a) {
     return t[a].includes(e)
   })
   if (a !== undefined) {
@@ -2307,7 +2309,7 @@ WH.getItemProfessionPropPointsType = function (e) {
 }
 WH.scaleItemLevel = function (e, t) {
   let a = e.level
-  let i = WH.curvePoints
+  const i = WH.curvePoints
   if (!i) {
     return a
   }
@@ -2315,7 +2317,7 @@ WH.scaleItemLevel = function (e, t) {
   let s = null
   let r = null
   if (e.scadist) {
-    let t = WH.getScalingDistributionCurve(e.scadist)
+    const t = WH.getScalingDistributionCurve(e.scadist)
     if (t && t.curve) {
       s = t.minLevel
       r = t.maxLevel
@@ -2323,7 +2325,7 @@ WH.scaleItemLevel = function (e, t) {
     }
   } else {
     if (e.contenttuning) {
-      let t = WH.getContentTuningLevels(e.contenttuning)
+      const t = WH.getContentTuningLevels(e.contenttuning)
       if (t) {
         s = t.minLevel
         r = t.maxLevel
@@ -2339,27 +2341,27 @@ WH.scaleItemLevel = function (e, t) {
     if (r && e > r) {
       e = r
     }
-    let o = i[n]
+    const o = i[n]
     if (o && o.length > 0) {
       let t = -1
-      for (let a in o) {
-        let i = o[a]
+      for (const a in o) {
+        const i = o[a]
         if (i[1] >= e) {
           t = a
           break
         }
       }
-      let i = o[t != -1 ? t : o.length - 1]
+      const i = o[t != -1 ? t : o.length - 1]
       let n = null
       let s = 0
       if (t > 0) {
         n = o[t - 1]
-        let a = i[1] - n[1]
+        const a = i[1] - n[1]
         if (a > 0) {
-          let t = e - n[1]
-          let r = t / a
-          let o = i[2] - n[2]
-          let l = r * o
+          const t = e - n[1]
+          const r = t / a
+          const o = i[2] - n[2]
+          const l = r * o
           s = n[2] + l
         }
       } else {
@@ -2377,7 +2379,7 @@ WH.findSparseKey = function (e, t) {
     return t.toString()
   }
   return Object.keys(e).reduce(function (e, a) {
-    let i = parseInt(a)
+    const i = parseInt(a)
     return i > t || parseInt(e) > i ? e : a
   }, '0')
 }
@@ -2442,7 +2444,7 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
     }
     var W = [0, 0, 0, 0, 2147483647, 2147483647, 2147483647, 2147483647]
     var H = c.scadistbonus ? false : 0
-    let t = [24, 25]
+    const t = [24, 25]
     let a = 0
     let i = 0
     let s = null
@@ -2456,7 +2458,7 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
         for (var h = 0; h < p.length; ++h) {
           var g = p[h]
           if (g[0] == 25) {
-            let e = c.statsInfo[t[a]]
+            const e = c.statsInfo[t[a]]
             if (e && e.alloc) {
               g[0] = 2
               g[2] = e.alloc
@@ -2547,7 +2549,7 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
               break
             case 27:
               if (WH.curvePoints) {
-                let e = WH.curvePoints[g[1]]
+                const e = WH.curvePoints[g[1]]
                 if (e && e[0] && e[0][2]) {
                   c.reqlevel = e[0][2]
                 }
@@ -2580,7 +2582,7 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
     }
     c.namedesc = c.namedesc ? c.namedesc : ''
     for (var h = 0; h < 4; ++h) {
-      let e = WH.Wow.Item.getNameDescription(W[h])
+      const e = WH.Wow.Item.getNameDescription(W[h])
       if (e) {
         c.namedesc += (!c.namedesc ? '' : ' ') + e
         if (!h) {
@@ -2594,7 +2596,7 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
       return
     }
     for (let t, a = 0; (t = WH.Wow.Item.Stat.CRAFTING_STAT_FROM[a]); a++) {
-      let i = o[a]
+      const i = o[a]
       if (!i) {
         continue
       }
@@ -2610,11 +2612,11 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
       delete c.statsInfo[t]
     }
   })()
-  let w = WH.Wow.Expansion.available(WH.Wow.Expansion.WRATH) && c.scadist > 0
+  const w = WH.Wow.Expansion.available(WH.Wow.Expansion.WRATH) && c.scadist > 0
   if (w) {
-    let e = WH.convertScalingFactor.SD.stats[c.scadist]
+    const e = WH.convertScalingFactor.SD.stats[c.scadist]
     if (e) {
-      let t = l.SCALING_STATS_DISTRIBUTION_STAT_MAX
+      const t = l.SCALING_STATS_DISTRIBUTION_STAT_MAX
       for (f = 0; f < t; f++) {
         if (e[f] > 0 && e[f + t] > 0) {
           c.statsInfo[e[f]] = {
@@ -2632,14 +2634,14 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
     WH.applyStatModifications.ScalingData &&
     (WH.applyStatModifications.ScalingData.AL.length > 1 || w)
   ) {
-    let t = WH.applyStatModifications.ScalingData.armor.total
-    let n = WH.applyStatModifications.ScalingData.armor.shield
-    let o = WH.applyStatModifications.ScalingData.armor.quality
-    let d = WH.applyStatModifications.ScalingData.SV
-    let u = WH.applyStatModifications.ScalingData.AL
-    let p = WH.applyStatModifications.ScalingData.socketCost
-    let h = WH.applyStatModifications.ScalingData.PPP
-    let g = WH.convertScalingFactor.SV
+    const t = WH.applyStatModifications.ScalingData.armor.total
+    const n = WH.applyStatModifications.ScalingData.armor.shield
+    const o = WH.applyStatModifications.ScalingData.armor.quality
+    const d = WH.applyStatModifications.ScalingData.SV
+    const u = WH.applyStatModifications.ScalingData.AL
+    const p = WH.applyStatModifications.ScalingData.socketCost
+    const h = WH.applyStatModifications.ScalingData.PPP
+    const g = WH.convertScalingFactor.SV
     c.level = i
       ? i
       : a && e.upgrades && e.upgrades[a - 1]
@@ -2647,10 +2649,10 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
         : c.level
     var A = c.level - e.level
     var L = Math.pow(1.15, A / 15)
-    let m =
+    const m =
       c.slot === WH.Wow.Item.INVENTORY_TYPE_PROFESSION_TOOL ||
       c.slot === WH.Wow.Item.INVENTORY_TYPE_PROFESSION_ACCESSORY
-    let W = m
+    const W = m
       ? WH.getItemProfessionPropPointsType(c)
       : WH.getItemRandPropPointsType(c)
     let H
@@ -2681,8 +2683,8 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
         }
         if (e !== -1) {
           e += W
-          let t = WH.findSparseKey(h, H)
-          let a = WH.findSparseKey(h[t] || {}, e)
+          const t = WH.findSparseKey(h, H)
+          const a = WH.findSparseKey(h[t] || {}, e)
           E = (h[t] || {})[a] || 0
         }
       } else if (w) {
@@ -2726,13 +2728,13 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
           default:
             break
         }
-        let t = WH.findSparseKey(R, e)
-        let a = WH.findSparseKey(R[t] || {}, W)
+        const t = WH.findSparseKey(R, e)
+        const a = WH.findSparseKey(R[t] || {}, W)
         E = (R[t] || {})[a] || 0
       }
     }
-    let T = WH.findSparseKey(p, H)
-    let v = p[T] || 0
+    const T = WH.findSparseKey(p, H)
+    const v = p[T] || 0
     for (var f in WH.statToJson) {
       var C = WH.statToJson[f]
       if (c[C] || (c.statsInfo && c.statsInfo[f])) {
@@ -2783,13 +2785,13 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
       c.scadist > 0 &&
       (c.dbcFlags ?? 0) & l.DBCITEM_FLAGS_SCALING_SPELL_POWER
     ) {
-      let e = g[s]?.[l.ITEM_SCALING_VALUE_SPELL_POWER_INDEX] ?? 0
+      const e = g[s]?.[l.ITEM_SCALING_VALUE_SPELL_POWER_INDEX] ?? 0
       c.statsInfo[WH.Wow.Item.Stat.ID_SPELL_POWER] = e
       c.splpwr = e
     }
     if (c['armor']) {
-      let e = c.quality === l.QUALITY_HEIRLOOM ? l.QUALITY_RARE : c.quality
-      let a =
+      const e = c.quality === l.QUALITY_HEIRLOOM ? l.QUALITY_RARE : c.quality
+      const a =
         c.subclass === l.ARMOR_SUBCLASS_CLOAKS
           ? l.ARMOR_SUBCLASS_CLOTH
           : c.subclass
@@ -2805,18 +2807,18 @@ WH.applyStatModifications = function (e, t, a, i, n, s, r, o) {
           c['armor'] = g[s][e]
         }
       } else if (l.isBodyArmor(l.CLASS_ARMOR, a)) {
-        let i = WH.findSparseKey(o, c.level)
-        let n = WH.findSparseKey(o[i] || {}, e)
-        let s = (o[i] || {})[n] || 0
-        let r = WH.findSparseKey(t, c.level)
-        let l = WH.findSparseKey(t[r] || {}, a - 1)
-        let d = (t[r] || {})[l] || 0
-        let f = u[c.slot][a - 1]
+        const i = WH.findSparseKey(o, c.level)
+        const n = WH.findSparseKey(o[i] || {}, e)
+        const s = (o[i] || {})[n] || 0
+        const r = WH.findSparseKey(t, c.level)
+        const l = WH.findSparseKey(t[r] || {}, a - 1)
+        const d = (t[r] || {})[l] || 0
+        const f = u[c.slot][a - 1]
         c['armor'] = Math.floor(d * s * f + 0.5)
       }
       if (c.subclass === l.ARMOR_SUBCLASS_SHIELDS) {
-        let t = WH.findSparseKey(n, c.level)
-        let a = WH.findSparseKey(n[t] || {}, e)
+        const t = WH.findSparseKey(n, c.level)
+        const a = WH.findSparseKey(n[t] || {}, e)
         c['armor'] = Math.round((n[t] || {})[a] || 0)
       }
     }
@@ -2908,9 +2910,9 @@ WH.applyStatModifications.BASE_STATS = [
   4, 3, 5, 71, 72, 73, 74, 7, 1, 0, 8, 9, 2, 10,
 ]
 WH.getItemDamageValue = function (e, t, a) {
-  let i = WH.applyStatModifications.ScalingData.DV
+  const i = WH.applyStatModifications.ScalingData.DV
   if (i && i[e]) {
-    let n = 7 * a + t
+    const n = 7 * a + t
     return i[e][WH.findSparseKey(i[e], n)]
   }
   return 0
@@ -3027,10 +3029,10 @@ WH.getJsonItemEnchantMask = function (e) {
   return 1 << (e.slot - 1)
 }
 WH.getArtifactKnowledgeMultiplier = function (e) {
-  let t =
+  const t =
     WH.Tooltips.getScalingData(WH.Types.ITEM, 'artifactKnowledgeMultiplier') ||
     {}
-  let a = WH.findSparseKey(t, e)
+  const a = WH.findSparseKey(t, e)
   return t[a] || 1
 }
 WH.getCurveValue = function (e, t) {
@@ -3089,21 +3091,21 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
   let d = 1
   let f = WH.maxLevel
   if (l.scadist) {
-    let e = WH.getScalingDistributionCurve(l.scadist)
+    const e = WH.getScalingDistributionCurve(l.scadist)
     if (e && e.maxLevel) {
       c = true
       d = e.minLevel || 1
       f = e.maxLevel
     }
   } else if (l.contenttuning) {
-    let e = WH.getContentTuningLevels(l.contenttuning)
+    const e = WH.getContentTuningLevels(l.contenttuning)
     if (e) {
       c = true
       d = e.minLevel
       f = e.maxLevel
     }
   } else if (l.scadistbonus && l.scadistbonustype === 13 && l.playercurve) {
-    let e = WH.curvePoints[l.playercurve]
+    const e = WH.curvePoints[l.playercurve]
     d = e[0][1]
     f = Math.min(e[e.length - 1][1], WH.maxLevel)
     c = true
@@ -3210,7 +3212,7 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
   })
   var g = WH.getCombatRatingMult(l.level, g_items[t].slot)
   e = (function (e) {
-    let t = WH.ce('div', { innerHTML: e })
+    const t = WH.ce('div', { innerHTML: e })
     WH.qsa('span', t).forEach(function (e) {
       let t
       let a
@@ -3235,31 +3237,31 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
       let s = false
       if (a) {
         let e = l[WH.statToJson[a]] ? l[WH.statToJson[a]] : 0
-        let t = e < 0 ? '-' : '+'
+        const t = e < 0 ? '-' : '+'
         if (e) {
           e = Math.round(e * g)
         } else {
           s = true
           e = 0
         }
-        let i = n.previousSibling
+        const i = n.previousSibling
         if (i && i.nodeType === Node.TEXT_NODE) {
           i.nodeValue = i.nodeValue.replace(/[-+]$/, t)
         }
-        let r = n.nextSibling
+        const r = n.nextSibling
         if (r && r.nodeType === Node.TEXT_NODE) {
           r.nodeValue = r.nodeValue.replace(/[-\d\.,]+/, e)
         }
       } else {
         let e = l[WH.statToJson[t]] ? l[WH.statToJson[t]] : 0
         if (e) {
-          let t = Math.round(e)
+          const t = Math.round(e)
           e = (t > 0 ? '+' : '-') + WH.numberLocaleFormat(t)
         } else {
           s = true
           e = '+0'
         }
-        let a = i.nextSibling
+        const a = i.nextSibling
         if (a && a.nodeType === Node.TEXT_NODE) {
           a.nodeValue = a.nodeValue.replace(/[-+][-\d\.,]+/, e)
         }
@@ -3373,9 +3375,9 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
     e = e.replace(/<!--nameDescStats-->/, (e) => {
       let t = ''
       l.itemNameDescStats.forEach((e) => {
-        let a = WH.Wow.Item.getNameDescription(e.nameDescId)
+        const a = WH.Wow.Item.getNameDescription(e.nameDescId)
         if (a) {
-          let i = WH.Wow.Item.getNameDescriptionColor(e.nameDescId)
+          const i = WH.Wow.Item.getNameDescriptionColor(e.nameDescId)
           let n = parseInt(i).toString(16)
           while (n.length < 6) {
             n = '0' + n
@@ -3445,7 +3447,7 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
         if (!l['socket' + (S + 1)]) {
           continue
         }
-        let e = l['socket' + (S + 1)]
+        const e = l['socket' + (S + 1)]
         var I = 'socket-unknown'
         let f = t
         var b = e
@@ -3578,7 +3580,7 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
           default:
             break
         }
-        let W = WH.Url.generatePath(
+        const W = WH.Url.generatePath(
           WH.sprintf('/items/gems?filter=$1;$2;0', f, b),
         )
         var y = WH.sprintf(
@@ -3593,16 +3595,16 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
     })
   }
   if (a) {
-    let t = WH.Tooltips.getScalingData(WH.Types.ITEM, 'bonusEffects')
-    let i = t && t.bonus
+    const t = WH.Tooltips.getScalingData(WH.Types.ITEM, 'bonusEffects')
+    const i = t && t.bonus
     if (i) {
       e = e.replace(/<!--itemEffects:(\d)-->/, function (e, n) {
-        let s =
+        const s =
           l.extraStats &&
           l.extraStats.indexOf(parseInt(WH.jsonToStat.corruption)) >= 0
         let r = ''
         for (let e, n = 0; (e = a[n]); n++) {
-          let a = i[e] || []
+          const a = i[e] || []
           for (let e, i = 0; (e = a[i]); i++) {
             let a = t.effect[e]
             if (a) {
@@ -3630,13 +3632,13 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
         continue
       }
       E[I] = E[I] || {}
-      let e =
+      const e =
         l.scadistbonus && l.scadistbonustype === 13 ? g_items[t].level : l.level
       WH.cO(E[I], WH.convertScalingSpell(E[I], I, v, S, n, e))
     }
     e = WH.adjustSpellPoints(e, E, l.level, g_items[t].jsonequip.slot)
   }
-  let b = WH.Timewalking.getCharLevelFromIlvl(s) || 0
+  const b = WH.Timewalking.getCharLevelFromIlvl(s) || 0
   if (b) {
     e = e.replace(
       /<!--ee(\d+):(\d+):(\d+):(\d+):(\d+):(\d+)-->([^<]*)<\/span>/gi,
@@ -3687,11 +3689,11 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
     if (!a) {
       return e
     }
-    let t = WH.getPageData('wow.item.bonuses.upgrades') || {}
+    const t = WH.getPageData('wow.item.bonuses.upgrades') || {}
     let i = ''
     a.some(function (e) {
       if (t[e]) {
-        let a = WH.ce('div')
+        const a = WH.ce('div')
         WH.ae(a, WH.ce('br'))
         WH.ae(
           a,
@@ -3725,11 +3727,11 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
       return ''
     }
     let e = ''
-    let t = (WH.getPageData('wow.item.bonusLimitCategoryNames') || {})[
+    const t = (WH.getPageData('wow.item.bonusLimitCategoryNames') || {})[
       l.limitcategory
     ]
     if (t) {
-      let a = t.uniqueEquipped
+      const a = t.uniqueEquipped
         ? WH.GlobalStrings.ITEM_UNIQUE_EQUIPPABLE
         : WH.GlobalStrings.ITEM_UNIQUE
       e = WH.Strings.escapeHtml(
@@ -3755,16 +3757,16 @@ WH.setItemModifications = function (e, t, a, i, n, s, r) {
       }
       e.dataset.wowhead = t
     })
-    let i = WH.getPageData('item.sellprice.' + t)
-    let s = a.querySelector('.whtt-sellprice')
+    const i = WH.getPageData('item.sellprice.' + t)
+    const s = a.querySelector('.whtt-sellprice')
     if (i && s) {
-      let e = s.firstChild
+      const e = s.firstChild
       WH.ee(s)
       WH.ae(s, e)
-      let t = i.itemLevel
-      let a = t[l.level] || t[Math.max.apply(null, Object.keys(t))]
-      let n = i.quality[l.quality] || 0
-      let r = Math.floor(i.base * a * n)
+      const t = i.itemLevel
+      const a = t[l.level] || t[Math.max.apply(null, Object.keys(t))]
+      const n = i.quality[l.quality] || 0
+      const r = Math.floor(i.base * a * n)
       WH.ae(s, WH.Wow.buildMoney({ copper: r }))
     }
     e = a.innerHTML
@@ -4122,8 +4124,8 @@ WH.getStaminaRatingMult = function (e, t) {
       a = 1
       break
   }
-  let i = WH.findSparseKey(WH.staminaFactor, e)
-  let n = WH.findSparseKey(WH.staminaFactor[i] || {}, a)
+  const i = WH.findSparseKey(WH.staminaFactor, e)
+  const n = WH.findSparseKey(WH.staminaFactor[i] || {}, a)
   return (WH.staminaFactor[i] || {})[n] || 1
 }
 WH.getCombatRatingMult = function (e, t) {
@@ -4151,8 +4153,8 @@ WH.getCombatRatingMult = function (e, t) {
       a = 1
       break
   }
-  let i = WH.findSparseKey(WH.convertRatingToPercent.RM, e)
-  let n = WH.findSparseKey(WH.convertRatingToPercent.RM[i] || {}, a)
+  const i = WH.findSparseKey(WH.convertRatingToPercent.RM, e)
+  const n = WH.findSparseKey(WH.convertRatingToPercent.RM[i] || {}, a)
   return (WH.convertRatingToPercent.RM[i] || {})[n] || 1
 }
 WH.roundArtifactPower = function (e) {
@@ -4181,9 +4183,9 @@ WH.setTooltipSpells = function (e, t, a, i, n = 0) {
   if (!t.length) {
     t = [0]
   } else {
-    let e = window.g_pageInfo ? g_pageInfo['typeId'] : null
+    const e = window.g_pageInfo ? g_pageInfo['typeId'] : null
     if (e) {
-      let a = t.indexOf(parseInt(e))
+      const a = t.indexOf(parseInt(e))
       if (a !== -1) {
         t[a] = 0
       }
@@ -4200,7 +4202,7 @@ WH.setTooltipSpells = function (e, t, a, i, n = 0) {
       }
       return t
     }
-    for (let e in a) {
+    for (const e in a) {
       if (!a.hasOwnProperty(e)) {
         continue
       }
@@ -4381,8 +4383,8 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
     }
     E = T.ilvl
   }
-  let v = WH.parseQueryString(WH.getQueryString())
-  let S = function () {
+  const v = WH.parseQueryString(WH.getQueryString())
+  const S = function () {
     if (!v['crafted-stats']) {
       return []
     }
@@ -4395,7 +4397,7 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
         return WH.Wow.Item.Stat.CRAFTING_STAT_TO.includes(e)
       })
   }
-  let I = S()
+  const I = S()
   if ((u || o || I.length) && g) {
     e = WH.setItemModifications(
       e,
@@ -4481,7 +4483,7 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
         this._difficultyBtn.ttId = g
         WH.difficultyBtnBuildMenu.call(this, g)
         Menu.add(this._difficultyBtn, this._difficultyBtn.menu)
-        let t = WH.ge('dd' + g)
+        const t = WH.ge('dd' + g)
         WH.ae(t, R)
         WH.ae(t, this._difficultyBtn)
         t.style.display = 'block'
@@ -4525,21 +4527,21 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
     if (n && n.modified) {
       n.bufftip = this
     } else {
-      let e = WH.getPageData('WH.Wow.Covenant.data')
-      for (let t in h) {
-        let a = Object.keys(e).find((a) => e[a].spellId === parseInt(t))
+      const e = WH.getPageData('WH.Wow.Covenant.data')
+      for (const t in h) {
+        const a = Object.keys(e).find((a) => e[a].spellId === parseInt(t))
         if ((!WH.Gatherer.get(WH.Types.SPELL, t) || s.includes(t)) && !a) {
           continue
         }
-        let i = WH.Gatherer.get(WH.Types.SPELL, t)
-        let n = i['name_' + Locale.getName()]
-        let o = i['rank_' + Locale.getName()] || ''
-        let l = o ? WH.term('parens_format', n, o) : n
-        let c = WH.ce('label')
-        let d = WH.ce('input', { type: 'checkbox', dataset: { spellId: t } })
+        const i = WH.Gatherer.get(WH.Types.SPELL, t)
+        const n = i['name_' + Locale.getName()]
+        const o = i['rank_' + Locale.getName()] || ''
+        const l = o ? WH.term('parens_format', n, o) : n
+        const c = WH.ce('label')
+        const d = WH.ce('input', { type: 'checkbox', dataset: { spellId: t } })
         WH.ae(c, d)
         WH.aE(d, 'click', WH.tooltipSpellsChange.bind(this))
-        let f = WH.ce('a', undefined, WH.ct(l))
+        const f = WH.ce('a', undefined, WH.ct(l))
         if (a) {
           f.classList.add('covenant-' + WH.Wow.Covenant.getSlug(a))
         } else {
@@ -4556,17 +4558,17 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
       }
     }
     WH.onLoad(() => {
-      let e = (e) => {
-        let t = WH.qs(
+      const e = (e) => {
+        const t = WH.qs(
           `.tooltip-options #ks${g} input[type="checkbox"][data-spell-id="${e}"]`,
         )
         if (t) {
           t.checked = true
         }
       }
-      let t = WH.Url.parseQueryString(location.search)
+      const t = WH.Url.parseQueryString(location.search)
       if (t.covenant) {
-        let a = (
+        const a = (
           (WH.getPageData('WH.Wow.Covenant.data') || {})[t.covenant] || {}
         ).spellId
         if (a) {
@@ -4684,15 +4686,15 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
         .append('<br />')
       $('#item-upgrade-pvp').change(WH.upgradeItemTooltip.bind(this, l, 'pvp'))
     }
-    let e = WH.Timewalking.getConfigs()
+    const e = WH.Timewalking.getConfigs()
     if (e.length > 0) {
-      let t = WH.ce('span', undefined, WH.ct(WH.TERMS.timewalkingScaling))
+      const t = WH.ce('span', undefined, WH.ct(WH.TERMS.timewalkingScaling))
       WH.Tooltips.attach(t, WH.TERMS.timewalkingScaling_tip, 'q')
-      let a = WH.ce('label', undefined, [t, WH.ct(WH.TERMS.colon_punct)])
-      let i = WH.ce('a', undefined, WH.ct(WH.TERMS.none))
+      const a = WH.ce('label', undefined, [t, WH.ct(WH.TERMS.colon_punct)])
+      const i = WH.ce('a', undefined, WH.ct(WH.TERMS.none))
       WH.ae(l, a)
       WH.ae(l, i)
-      let n = []
+      const n = []
       n.push(
         Menu.createItem({
           label: WH.TERMS.none,
@@ -4705,11 +4707,11 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
         }),
       )
       e.forEach((e) => {
-        let t = `tooltip_${Locale.getName()}_${e.stringId}`
+        const t = `tooltip_${Locale.getName()}_${e.stringId}`
         if (!m[g] || !m[g].hasOwnProperty(t)) {
           return
         }
-        let a = WH.Wow.Expansion.getName(e.id)
+        const a = WH.Wow.Expansion.getName(e.id)
         n.push(
           Menu.createItem({
             label: a,
@@ -4781,16 +4783,16 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
     WH.Page.WowItem.initBonuses(this, u)
   }
   ;(function () {
-    let e = WH.ge('craftedStatsSelector' + g)
+    const e = WH.ge('craftedStatsSelector' + g)
     if (!m[g] || !e || e.dataset.initialized) {
       return
     }
     const t = this
     let a = 0
     let i
-    let n = function (e) {
+    const n = function (e) {
       let t = S()
-      let i = t.indexOf(e)
+      const i = t.indexOf(e)
       if (i >= 0) {
         t.splice(i, 1)
       } else {
@@ -4806,11 +4808,11 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
       })
       s()
       if (m[g]['tooltip_' + Locale.getName()]) {
-        let e =
+        const e =
           this._bonusesBtn && this._bonusesBtn.selectedBonus
             ? this._bonusesBtn.selectedBonus
             : null
-        let t = WH.enhanceTooltip.call(
+        const t = WH.enhanceTooltip.call(
           this,
           g,
           true,
@@ -4829,9 +4831,9 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
         WH.updateTooltip.call(this, t)
       }
     }
-    let s = function () {
+    const s = function () {
       let e = ''
-      let t = S()
+      const t = S()
       if (!t.length) {
         e = WH.TERMS.none
       } else {
@@ -4842,7 +4844,7 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
       WH.st(i, e)
     }
     e.dataset.initialized = 1
-    let r = (m[g].jsonequip && m[g].jsonequip.statsInfo) || {}
+    const r = (m[g].jsonequip && m[g].jsonequip.statsInfo) || {}
     WH.Wow.Item.Stat.CRAFTING_STAT_FROM.forEach(function (e) {
       if (r.hasOwnProperty(e)) {
         a++
@@ -4862,7 +4864,7 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
     )
     i = WH.ce('a', {}, WH.ct(WH.TERMS.none))
     WH.ae(e, i)
-    let l = []
+    const l = []
     WH.Wow.Item.Stat.CRAFTING_STAT_TO.forEach(function (e) {
       l.push(
         Menu.createItem({
@@ -4883,9 +4885,9 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
     Menu.add(i, l)
     s()
   }).call(this)
-  let Y = this.slider ? this.slider._max : WH.maxLevel
-  let K = this._selectedLevel || Y
-  let V = B ? B.classId : WH.Wow.PlayerClass.WARRIOR
+  const Y = this.slider ? this.slider._max : WH.maxLevel
+  const K = this._selectedLevel || Y
+  const V = B ? B.classId : WH.Wow.PlayerClass.WARRIOR
   e = WH.addRatingPercent(e, K, Y, V)
   if (W === WH.Types.ITEM) {
     WH.updateItemStringLink.call(this)
@@ -4897,13 +4899,13 @@ WH.enhanceTooltip = function (e, t, a, i, n, s, r, o, l, c, d, f, u) {
   return e
 }
 WH.addRatingPercent = function (e, t, a, i) {
-  let n = WH.ce('div', { innerHTML: e })
+  const n = WH.ce('div', { innerHTML: e })
   WH.qsa('span', n).forEach(function (e) {
     let n
     let s
     e.childNodes.forEach(function (e) {
       if (e.nodeType === Node.COMMENT_NODE) {
-        let t = (e.nodeValue || '').match(/^rtg(\d+)$/)
+        const t = (e.nodeValue || '').match(/^rtg(\d+)$/)
         if (t) {
           n = parseInt(t[1])
           s = e
@@ -4913,22 +4915,22 @@ WH.addRatingPercent = function (e, t, a, i) {
     if (n === undefined) {
       return
     }
-    let r = s.nextSibling.nodeValue.match(/(\d+)(.*)$/)
+    const r = s.nextSibling.nodeValue.match(/(\d+)(.*)$/)
     if (!r) {
       return
     }
-    let o = WH.qs('small.rating-percent')
+    const o = WH.qs('small.rating-percent')
     if (o) {
       WH.de(o)
     }
-    let l = parseInt(r[0])
-    let c = r[2]
-    let d = WH.convertRatingToPercent(t, n, l, i)
-    let f = WH.TERMS
+    const l = parseInt(r[0])
+    const c = r[2]
+    const d = WH.convertRatingToPercent(t, n, l, i)
+    const f = WH.TERMS
       ? WH.term('valueAtLevel_format', d.toFixed(2), t)
       : ' (' + d.toFixed(2) + '% @ L' + t + ')'
-    let u = s.nextSibling
-    let p = WH.ce('small', { className: 'rating-percent' }, WH.ct(f))
+    const u = s.nextSibling
+    const p = WH.ce('small', { className: 'rating-percent' }, WH.ct(f))
     if (c === '.') {
       u.parentNode.insertBefore(WH.ct(l), u)
       u.parentNode.insertBefore(p, u)
@@ -4943,7 +4945,7 @@ WH.addRatingPercent = function (e, t, a, i) {
   return n.innerHTML
 }
 WH.tooltipLevelPrompt = function (e, t) {
-  let a = 1
+  const a = 1
   let i = prompt(WH.sprintf(WH.TERMS.ratinglevel_format, a, t), e.toString())
   if (i === null) {
     return
@@ -4953,7 +4955,7 @@ WH.tooltipLevelPrompt = function (e, t) {
     alert('Invalid value; must be between ' + a + ' and ' + t + '.')
     return
   }
-  let n = WH.qs('.wowhead-tooltip')
+  const n = WH.qs('.wowhead-tooltip')
   if (n.slider) {
     Slider.setValue(n.slider, i)
   }
@@ -4977,8 +4979,8 @@ WH.groupSizeScalingSliderMove = function (e, t, a) {
   if (!i[n]) {
     return
   }
-  let s = this._difficultyBtn.selectedDD
-  let r = a.value
+  const s = this._difficultyBtn.selectedDD
+  const r = a.value
   WH.Url.replacePageQuery(function (e) {
     if (
       s != WH.groupSizeScalingShouldShow(n) ||
@@ -5127,15 +5129,15 @@ WH.classSpecBtnOnChange = function (e, t, a, i) {
   t = t ? parseInt(t) : null
   WH.ee(this._classSpecBtn)
   this._classSpecBtn.selectedSpec = t
-  let s = Menu.findItem(this._classSpecBtn.menu, [e, t])
+  const s = Menu.findItem(this._classSpecBtn.menu, [e, t])
   if (s && s[Menu.ITEM_OPTIONS] && s[Menu.ITEM_OPTIONS].tinyIcon) {
-    let e = s[Menu.ITEM_OPTIONS].tinyIcon
-    let t = WH.Icon.create(e, WH.Icon.SMALL, 'javascript:')
+    const e = s[Menu.ITEM_OPTIONS].tinyIcon
+    const t = WH.Icon.create(e, WH.Icon.SMALL, 'javascript:')
     t.style.display = 'inline-block'
     t.style.verticalAlign = 'middle'
     WH.ae(this._classSpecBtn, t)
   }
-  let r = WH.Wow.PlayerClass.Specialization.getName(t)
+  const r = WH.Wow.PlayerClass.Specialization.getName(t)
   WH.ae(
     this._classSpecBtn,
     WH.ce(
@@ -5190,8 +5192,8 @@ WH.classSpecBtnOnChange = function (e, t, a, i) {
     o = o.replace(
       /<span[^>]*?><!--stat(\d+)-->([-+][\d\.,]+(?:-[\d\.,]+)?)(\D*?)<\/span>/gi,
       function (a, i, n, s) {
-        let r = WH.ce('div', { innerHTML: a })
-        let o = WH.qs('span', r)
+        const r = WH.ce('div', { innerHTML: a })
+        const o = WH.qs('span', r)
         o.classList.remove('q0', 'q2')
         i = parseInt(i)
         if (i === 50) {
@@ -5201,9 +5203,9 @@ WH.classSpecBtnOnChange = function (e, t, a, i) {
           o.classList.remove('q2')
           o.classList.add('q0')
         }
-        let l = t ? WH.getStatForSpec(i, t) : WH.getStatForClass(i, e)
+        const l = t ? WH.getStatForSpec(i, t) : WH.getStatForClass(i, e)
         if (l !== i && WH.statToJson[l]) {
-          let e = WH.Wow.Item.Stat.jsonToName(WH.statToJson[l])
+          const e = WH.Wow.Item.Stat.jsonToName(WH.statToJson[l])
           if (e) {
             s = ' ' + e
           }
@@ -5316,9 +5318,9 @@ WH.classSpecBtnBuildMenu = function (e) {
 }
 WH.getStatForClass = function (e, t) {
   let a = undefined
-  let i = WH.Wow.PlayerClass.Specialization.getByClass(t) || []
+  const i = WH.Wow.PlayerClass.Specialization.getByClass(t) || []
   for (let t = 0, n; (n = i[t]); t++) {
-    let t = WH.getStatForSpec(e, n)
+    const t = WH.getStatForSpec(e, n)
     if (a === undefined) {
       a = t
     } else if (a !== t) {
@@ -5464,10 +5466,10 @@ WH.getItemBonusUpgradeType = function (e) {
 }
 WH.bonusesBtnGetContextBonusId = function (e) {
   let t = 0
-  let a = WH.getPageData('wow.item.bonuses.listGroup')
+  const a = WH.getPageData('wow.item.bonuses.listGroup')
   if (e && e.length) {
     for (let i = 0; i < e.length; ++i) {
-      let n = parseInt(e[i])
+      const n = parseInt(e[i])
       if (
         (window.g_itembonuses &&
           g_itembonuses['-1'] &&
@@ -5555,14 +5557,14 @@ WH.updateItemStringLink = function () {
   }
 }
 WH.upgradeItemTooltip = function (e, t, a) {
-  let i = WH.getDataSource()
-  let n = g_pageInfo['typeId']
+  const i = WH.getDataSource()
+  const n = g_pageInfo['typeId']
   if (i[n]) {
     if (a) {
       s(this)
       return
     }
-    let r = $('#' + e.id + ' > input')
+    const r = $('#' + e.id + ' > input')
     let o = null
     if (typeof t !== 'number') {
       r.each(function (e, a) {
@@ -5574,7 +5576,7 @@ WH.upgradeItemTooltip = function (e, t, a) {
     } else {
       o = r.get(t - 1)
     }
-    let l = o.checked
+    const l = o.checked
     r.each(function (e, t) {
       t.checked = false
     })
@@ -5587,11 +5589,11 @@ WH.upgradeItemTooltip = function (e, t, a) {
       this._selectedUpgrade = t
       WH.updateItemStringLink.call(e)
       if (i[n]['tooltip_' + Locale.getName()]) {
-        let a =
+        const a =
           e._bonusesBtn && e._bonusesBtn.selectedBonus
             ? e._bonusesBtn.selectedBonus
             : null
-        let i = WH.enhanceTooltip.call(
+        const i = WH.enhanceTooltip.call(
           e,
           n,
           true,
@@ -5783,12 +5785,12 @@ WH.tooltipSpellsChange = function () {
     WH.tooltipSpellsChange.bind(this.bufftip)()
   }
   WH.Url.replacePageQuery(function (e) {
-    let t = WH.getPageData('WH.Wow.Covenant.data')
+    const t = WH.getPageData('WH.Wow.Covenant.data')
     delete e.spellModifier
     delete e.covenant
-    let i = []
+    const i = []
     a.forEach((a) => {
-      let n = Object.keys(t).find((e) => t[e].spellId === a)
+      const n = Object.keys(t).find((e) => t[e].spellId === a)
       if (n) {
         e.covenant = n
       } else {
@@ -6015,14 +6017,14 @@ WH.D4 = new (function () {
     if (typeof e === 'string') {
       e = parseInt(e)
     }
-    let t = '/d4/texture/'
-    let a = WH.WebP.getImageExtension()
+    const t = '/d4/texture/'
+    const a = WH.WebP.getImageExtension()
     return e
       ? `${WH.STATIC_URL}${t}hash/${e & 255}/${e}${a}`
       : `${WH.STATIC_URL}${t}hash/74/582516298${a}`
   }
   this.getStringHash = (e, t = true) => {
-    let a = Array.from(t ? e.toLowerCase() : e)
+    const a = Array.from(t ? e.toLowerCase() : e)
       .map((e) => e.charCodeAt(0))
       .reduce((e, t) => ((e << 5) + e + t) & 4294967295, 0)
     return a < 0 ? a + 4294967296 : a
@@ -6040,7 +6042,7 @@ WH.Device = new (function () {
     return e.isTouch
   }
   function t() {
-    let t = navigator.userAgent || navigator.vendor || window.opera
+    const t = navigator.userAgent || navigator.vendor || window.opera
     if (
       /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
         t,
@@ -6115,7 +6117,7 @@ WH.Game = new (function () {
     [this.WOW]: WH.dataEnv.MAIN,
     [this.D4]: WH.dataEnv.D4,
   }
-  let n = {
+  const n = {
     [WH.dataEnv.BETA]: 'beta',
     [WH.dataEnv.D2]: 'diablo-2',
     [WH.dataEnv.DI]: 'diablo-immortal',
@@ -6145,7 +6147,7 @@ WH.Game = new (function () {
   this.getAll = () => Object.keys(a).map(Number)
   this.getAllSelectors = () => Object.values(n)
   this.getAllSorted = () => {
-    let t = e.getAll()
+    const t = e.getAll()
     t.sort((t, a) => {
       if (t === e.WOW) {
         return -1
@@ -6157,7 +6159,7 @@ WH.Game = new (function () {
     return t
   }
   this.getByKey = (e) => {
-    for (let t of Object.keys(a)) {
+    for (const t of Object.keys(a)) {
       if (a[t] === e) {
         return parseInt(t)
       }
@@ -6167,8 +6169,8 @@ WH.Game = new (function () {
   this.getByTree = (e) => s[e]
   this.getDataEnvBySelector = (e) => WH.findKey(n, e, true)
   this.getDataEnvs = (e) => {
-    let a = []
-    let i = t[e].dataTrees
+    const a = []
+    const i = t[e].dataTrees
     Object.entries(WH.dataEnvToTree).forEach(([e, t]) => {
       if (i.includes(t)) {
         a.push(parseInt(e))
@@ -6190,8 +6192,8 @@ WH.Game = new (function () {
   this.getSeoName = (e) => (t[e] ? WH.TERMS[t[e].termSeo] : undefined)
   this.getWowIconName = (e) => r[e]
   this.hasAccess = (t) => {
-    let a = (e.getDataTrees(t) || []).filter((e) => {
-      for (let [t, a] of Object.entries(WH.dataEnvToTree)) {
+    const a = (e.getDataTrees(t) || []).filter((e) => {
+      for (const [t, a] of Object.entries(WH.dataEnvToTree)) {
         if (a !== e) {
           continue
         }
@@ -6257,13 +6259,13 @@ WH.Icon = new (function () {
     if (n) {
       n = `${n}`
     }
-    let l =
+    const l =
       o.dataEnv || (o.type && i.getPreferredDataEnv(o.type)) || t.getEnv(o.game)
-    let c = t.getByEnv(l)
+    const c = t.getByEnv(l)
     if (s === e.TINY) {
       return WH.ce('img', { className: 'icontiny', src: e.getIconUrl(n, s, c) })
     }
-    let d = WH.ce(o.span ? 'span' : 'div', {
+    const d = WH.ce(o.span ? 'span' : 'div', {
       className: 'icon' + s,
       dataset: {
         env: WH.getDataEnvKey(l),
@@ -6275,7 +6277,7 @@ WH.Icon = new (function () {
     if (o.border !== false) {
       WH.ae(d, WH.ce('del'))
     }
-    let f = o.type && i.getStringId(o.type)
+    const f = o.type && i.getStringId(o.type)
     if (f) {
       d.dataset.type = f
     }
@@ -6300,13 +6302,13 @@ WH.Icon = new (function () {
     }
     const u = o.ariaLabel || WH.TERMS.icon
     if (r) {
-      let e = WH.ce('a', { ariaLabel: u, href: r })
+      const e = WH.ce('a', { ariaLabel: u, href: r })
       if (r.indexOf('wowhead.com') === -1 && /^https?:/.test(r)) {
         e.target = '_blank'
       }
       WH.ae(d, e)
     } else if (n) {
-      let e = d.firstChild.style.backgroundImage.indexOf('/avatars/') !== -1
+      const e = d.firstChild.style.backgroundImage.indexOf('/avatars/') !== -1
       if (!e) {
         if (r !== null) {
           WH.ae(d, WH.ce('a', { ariaLabel: u, href: 'javascript:' }))
@@ -6322,7 +6324,7 @@ WH.Icon = new (function () {
   }
   this.createByEntity = function (t, a, n, s) {
     s = s || {}
-    let r = s.size
+    const r = s.size
     delete s.size
     s.dataEnv = s.dataEnv || t.dataEnv || (i.getRequiredTrees(a) || [])[0]
     s.type = a
@@ -6409,7 +6411,7 @@ WH.Icon = new (function () {
     return n.indexOf(e) !== -1
   }
   this.setImage = function (e, t, a, i) {
-    let n = e.firstChild
+    const n = e.firstChild
     n.style.backgroundPosition = ''
     if (i) {
       n.style['-webkit-mask-image'] = t ? 'url("' + t + '")' : ''
@@ -6421,7 +6423,7 @@ WH.Icon = new (function () {
     }
   }
   this.setLinkUrl = function (t, a) {
-    let i = e.getLink(t)
+    const i = e.getLink(t)
     if (i) {
       i.href = a
     }
@@ -6586,12 +6588,12 @@ var Icon = {
   },
   showIconInfo: function (e) {
     if (e.firstChild) {
-      let t = e.firstChild.style
+      const t = e.firstChild.style
       if (
         t.backgroundImage &&
         (!WH.STATIC_URL || t.backgroundImage.indexOf(WH.STATIC_URL) >= 4)
       ) {
-        let e = t.backgroundImage.match(
+        const e = t.backgroundImage.match(
           /images\/([^/]+)\/icons\/[^/]+\/([^/.]+).(?:jpg|gif)/,
         )
         if (e) {
@@ -6658,13 +6660,13 @@ var Icon = {
             compute: function (e, t, a, i, n) {
               WH.ee(i)
               i.classList.add('icon-dialog-caption')
-              let s = WH.Strings.escapeHtml(
+              const s = WH.Strings.escapeHtml(
                 WH.Url.generatePath('/items?filter=142;0;' + this.data.icon),
               )
-              let r = WH.Strings.escapeHtml(
+              const r = WH.Strings.escapeHtml(
                 WH.Url.generatePath('/spells?filter=15;0;' + this.data.icon),
               )
-              let o = WH.Strings.escapeHtml(
+              const o = WH.Strings.escapeHtml(
                 WH.Url.generatePath(
                   '/achievements?filter=10;0;' + this.data.icon,
                 ),
@@ -6707,7 +6709,7 @@ var Icon = {
             this.oldHash = location.hash
           else this.oldHash = ''
           var t = '#icon'
-          let a =
+          const a =
             window.g_pageInfo &&
             g_pageInfo.type &&
             [WH.Types.ITEM, WH.Types.SPELL, WH.Types.ACHIEVEMENT].includes(
@@ -6734,8 +6736,8 @@ var Icon = {
         },
         onSubmit: function (e, t, a, i) {
           if (a === 'arrow') {
-            let e = WH.Icon.getIconUrl(t.icon, WH.Icon.LARGE, t.game)
-            let a = window.open(e, '_blank')
+            const e = WH.Icon.getIconUrl(t.icon, WH.Icon.LARGE, t.game)
+            const a = window.open(e, '_blank')
             a.focus()
             return false
           }
@@ -6748,7 +6750,7 @@ var Icon = {
   },
   checkPound: function () {
     if (location.hash && location.hash.indexOf('#icon') === 0) {
-      let e = location.hash.split(':')
+      const e = location.hash.split(':')
       let t
       let a
       if (e.length === 3) {
@@ -7109,7 +7111,7 @@ WH.Tooltips =
       },
     }
     const u = (() => {
-      let e = {
+      const e = {
         [WH.dataTree.D2]: ['guide'],
         [WH.dataTree.D4]: [
           'affix',
@@ -7317,15 +7319,15 @@ WH.Tooltips =
     ]
     const y = /([a-zA-Z0-9-]+)=?([^&?#]*)/g
     const _ = (() => {
-      let e = {}
+      const e = {}
       Object.entries(f).forEach(([a, n]) => {
-        let s = parseInt(a)
+        const s = parseInt(a)
         if (s < 0) {
           e[n.path] = s
           return
         }
-        let r = i.getGame(s)
-        let o = r === t.WOW ? '' : `${t.getKey(r)}-`
+        const r = i.getGame(s)
+        const o = r === t.WOW ? '' : `${t.getKey(r)}-`
         i.getHistoricalDetailPageNames(s).forEach((t) => (e[o + t] = s))
       })
       return e
@@ -7353,15 +7355,15 @@ WH.Tooltips =
         WH.dataEnv.CLASSIC,
         WH.dataEnv.D2,
       ].map((e) => {
-        let a = WH.getDataTree(e)
-        let i = t.getByTree(a)
-        let n = u[a]
-        let s = t.getSelectorByDataEnv(e)
-        let r =
+        const a = WH.getDataTree(e)
+        const i = t.getByTree(a)
+        const n = u[a]
+        const s = t.getSelectorByDataEnv(e)
+        const r =
           '^https?://(?:\\w+\\.)*wowhead\\.com(?:\\:\\d+)?' +
           (s ? `/${s}` : '') +
           '/(?:(\\w\\w)/)?'
-        let o = '(' + n.join('|') + ')'
+        const o = '(' + n.join('|') + ')'
         return {
           detailPagePrefix: i === t.WOW ? '' : `${t.getKey(i)}-`,
           envId: e,
@@ -7515,7 +7517,7 @@ WH.Tooltips =
         $.elements.screen.style.display = 'none'
         $.usingScreen = false
       }
-      let t = e === true ? $.showingTooltip : false
+      const t = e === true ? $.showingTooltip : false
       Se()
       $.showingTooltip = t
     }
@@ -7523,7 +7525,7 @@ WH.Tooltips =
       if (typeof e !== 'string') {
         return e
       }
-      let a =
+      const a =
         /<span class="wh-tooltip-formula" style="display:none">(\[[\w\W]*?\])<\/span>(?:\d+(?:\.\d+)?)?/g
       e = e.replace(a, '$1')
       let i = 0
@@ -7531,7 +7533,7 @@ WH.Tooltips =
       let s = ''
       let r = 0
       for (let a = 0; a < e.length; a++) {
-        let o = e.substr(a, 1)
+        const o = e.substr(a, 1)
         switch (o) {
           case '[':
             i++
@@ -7640,18 +7642,18 @@ WH.Tooltips =
           me('iconizeLinks') ||
           me('iconSize')
         ) {
-          let e = re()
+          const e = re()
           for (let t = 0; t < e.length; t++) {
             ze(e[t])
           }
           ye()
         } else if (document.querySelectorAll) {
-          let e = [
+          const e = [
             'a[href*="wowhead.com/talent-calc/embed/"]',
             'a[href*="wowhead.com/soulbind-calc/embed/"]',
             'a[href*="wowhead.com/diablo-2/skill-calc/embed/"]',
           ].join(',')
-          let t = document.querySelectorAll(e)
+          const t = document.querySelectorAll(e)
           for (let e = 0; e < t.length; e++) {
             ze(t[e])
           }
@@ -7688,12 +7690,12 @@ WH.Tooltips =
         me('colorLinks') ||
         me('iconizeLinks')
       ) {
-        let e = re()
+        const e = re()
         for (let i, n = 0; (i = e[n]); n++) {
           var t = i.parentNode
           var a = false
           while (t != null) {
-            let e = (t.getAttribute && t.getAttribute('class')) || ''
+            const e = (t.getAttribute && t.getAttribute('class')) || ''
             if (
               (' ' + e + ' ')
                 .replace(/[\n\t]/g, ' ')
@@ -7715,9 +7717,9 @@ WH.Tooltips =
       Se()
     }
     this.register = function (t, a, n, s, r) {
-      let o = this.getEntity(t, a, n, s)
+      const o = this.getEntity(t, a, n, s)
       {
-        let a = r.additionalIds || []
+        const a = r.additionalIds || []
         delete r.additionalIds
         a.forEach((a) => e.register(t, a, n, s, r))
       }
@@ -7812,12 +7814,12 @@ WH.Tooltips =
             u.push('wowhead-tooltip-inline-icon')
           }
           j(a, u)
-          let h = t.getByEnv(s)
+          const h = t.getByEnv(s)
           if (h !== t.get()) {
             WH.Fonts.load(h)
           }
           var p = d.data[Te()]
-          let g = function (n) {
+          const g = function (n) {
             if (typeof l === 'function') {
               n = l(n, d)
             }
@@ -7869,10 +7871,10 @@ WH.Tooltips =
           return
         }
         e._fixTooltip = function (e, t, a, i) {
-          let n = /<\/table>\s*$/
-          let s = typeof a === 'function' ? a() : a
-          let r = a ? ' class="' + s + '"' : ''
-          let o = typeof t === 'function' ? t() : t
+          const n = /<\/table>\s*$/
+          const s = typeof a === 'function' ? a() : a
+          const r = a ? ' class="' + s + '"' : ''
+          const o = typeof t === 'function' ? t() : t
           if (n.test(i)) {
             return i.replace(
               n,
@@ -7895,18 +7897,18 @@ WH.Tooltips =
           }
           return
         }
-        let s = { dataEnv: n.dataEnv, type: n.type, iconName: n.iconName }
-        let r = n.stopPropagation ? (e) => e.stopPropagation() : () => {}
+        const s = { dataEnv: n.dataEnv, type: n.type, iconName: n.iconName }
+        const r = n.stopPropagation ? (e) => e.stopPropagation() : () => {}
         if (n.byCursor) {
           t.onmouseover = (e) => {
-            let t = Ge(a, n.noWrap, n.maxWidth, e)
+            const t = Ge(a, n.noWrap, n.maxWidth, e)
             Je(e, t, i, s)
             r(e)
           }
           t.onmousemove = e.cursorUpdate
         } else {
           t.onmouseover = (e) => {
-            let o = Ge(a, n.noWrap, n.maxWidth, e)
+            const o = Ge(a, n.noWrap, n.maxWidth, e)
             Qe(t, o, i, s)
             r(e)
           }
@@ -7946,7 +7948,7 @@ WH.Tooltips =
         WH.aE($.elements.tooltip, e, t)
       }
       this.relToParams = (e) => {
-        let t = {}
+        const t = {}
         e.forEach((e) => e.replace(y, (e, a, i) => Pe(t, a, i) || ''))
         return t
       }
@@ -7988,7 +7990,7 @@ WH.Tooltips =
         }
       } else {
         for (var a = 0; a < t.length; a++) {
-          let i = (e.getAttribute && e.getAttribute('class')) || ''
+          const i = (e.getAttribute && e.getAttribute('class')) || ''
           if ((' ' + i + ' ').indexOf(' ' + t[a] + ' ') < 0) {
             e.setAttribute('class', (i ? i + ' ' : '') + t[a])
           }
@@ -7996,8 +7998,8 @@ WH.Tooltips =
       }
     }
     function Y(e, t, a, i, n) {
-      let s = ee(a)
-      let r = s.tooltip
+      const s = ee(a)
+      const r = s.tooltip
       K(r, i, n)
       Ke(s.icon, t, n, i)
       WH.ae(e, r)
@@ -8009,25 +8011,25 @@ WH.Tooltips =
       } else {
         delete e.dataset.status
       }
-      let n = t && WH.Game.getKey(WH.Game.getByEnv(t))
+      const n = t && WH.Game.getKey(WH.Game.getByEnv(t))
       if (n) {
         e.dataset.game = n
       } else {
         delete e.dataset.game
       }
-      let s = t && WH.getDataTreeKey(WH.getDataTree(t))
+      const s = t && WH.getDataTreeKey(WH.getDataTree(t))
       if (s) {
         e.dataset.tree = s
       } else {
         delete e.dataset.tree
       }
-      let r = t && WH.getDataEnvKey(t)
+      const r = t && WH.getDataEnvKey(t)
       if (r) {
         e.dataset.env = r
       } else {
         delete e.dataset.env
       }
-      let o = a && WH.Types.getReferenceName(a)
+      const o = a && WH.Types.getReferenceName(a)
       if (o) {
         e.dataset.type = o
       } else {
@@ -8054,10 +8056,10 @@ WH.Tooltips =
       WH.qsa(':scope > .image', $.elements.tooltipTable.parentNode).forEach(
         (e) => WH.de(e),
       )
-      let a = typeof e
+      const a = typeof e
       if (a === 'number') {
-        let t = WH.getDataSource()
-        let a = e
+        const t = WH.getDataSource()
+        const a = e
         if (t[a] && t[a]['image_' + Locale.getName()]) {
           e = t[a]['image_' + Locale.getName()]
         } else {
@@ -8066,7 +8068,7 @@ WH.Tooltips =
       } else if (a !== 'string' || !e) {
         return
       }
-      let i = WH.ce('div', {
+      const i = WH.ce('div', {
         className: 'image' + (t ? ' ' + t : ''),
         style: { backgroundImage: 'url(' + e + ')' },
       })
@@ -8105,16 +8107,16 @@ WH.Tooltips =
       e.style.maxHeight = null
     }
     function ee(e, t) {
-      let a = WH.ce('div', { className: 'wowhead-tooltip' })
-      let i = WH.ce('table')
-      let n = WH.ce('tbody')
-      let s = WH.ce('tr')
-      let r = WH.ce('tr')
-      let o = WH.ce('td')
-      let l = WH.ce('th', { style: { backgroundPosition: 'top right' } })
-      let c = WH.ce('th', { style: { backgroundPosition: 'bottom left' } })
-      let d = WH.ce('th', { style: { backgroundPosition: 'bottom right' } })
-      let f = { tooltip: a }
+      const a = WH.ce('div', { className: 'wowhead-tooltip' })
+      const i = WH.ce('table')
+      const n = WH.ce('tbody')
+      const s = WH.ce('tr')
+      const r = WH.ce('tr')
+      const o = WH.ce('td')
+      const l = WH.ce('th', { style: { backgroundPosition: 'top right' } })
+      const c = WH.ce('th', { style: { backgroundPosition: 'bottom left' } })
+      const d = WH.ce('th', { style: { backgroundPosition: 'bottom right' } })
+      const f = { tooltip: a }
       if (e) {
         o.innerHTML = e
       }
@@ -8148,7 +8150,7 @@ WH.Tooltips =
       $.show.locale = n
       $.show.params = s
       st.isLoaded(t, i)
-      let o = e.getEntity(t, r, i, n)
+      const o = e.getEntity(t, r, i, n)
       if (o.status === B || o.status === x) {
         at()
       } else if (o.status === k || o.status === F) {
@@ -8164,17 +8166,17 @@ WH.Tooltips =
     }
     function ie(e, t) {
       const a = 20
-      let i = WH.qs('table', e)
-      let n = WH.qs('td', i)
-      let s = n.childNodes
+      const i = WH.qs('table', e)
+      const n = WH.qs('td', i)
+      const s = n.childNodes
       e.classList.remove('tooltip-slider')
       if (
         s.length >= 2 &&
         s[0].nodeName === 'TABLE' &&
         s[1].nodeName === 'TABLE'
       ) {
-        let r = s[0]
-        let o = s[1]
+        const r = s[0]
+        const o = s[1]
         r.style.whiteSpace = 'nowrap'
         let l = parseInt(e.style.width)
         if (!e.slider || !l) {
@@ -8207,8 +8209,8 @@ WH.Tooltips =
           }
         }
       } else if (s.length && e.slider) {
-        let n = s[0]
-        let r = n.nodeName === 'TABLE'
+        const n = s[0]
+        const r = n.nodeName === 'TABLE'
         if (r) {
           n.style.whiteSpace = 'nowrap'
         }
@@ -8249,7 +8251,7 @@ WH.Tooltips =
         $.elements.tooltip.dispatchEvent(new Event(e))
       } catch (t) {
         try {
-          let t = document.createEvent('Event')
+          const t = document.createEvent('Event')
           t.initEvent(e, true, true)
           $.elements.tooltip.dispatchEvent(t)
         } catch (e) {
@@ -8258,7 +8260,7 @@ WH.Tooltips =
       }
     }
     function re() {
-      let e = []
+      const e = []
       for (let t = 0; t < document.links.length; t++) {
         e.push(document.links[t])
       }
@@ -8383,7 +8385,7 @@ WH.Tooltips =
       if (!$.showScreenshots) {
         return false
       }
-      let n = WH.Gatherer.get(e, t, a, true)
+      const n = WH.Gatherer.get(e, t, a, true)
       if (n) {
         if (n.screenshot && n.screenshot.id) {
           return [
@@ -8399,7 +8401,7 @@ WH.Tooltips =
           n.jsonequip.displayid
         ) {
           let e = n.jsonequip.displayid
-          let t = n.reqrace || n.jsonequip.races
+          const t = n.reqrace || n.jsonequip.races
           let a = WH.Wow.Models.getRaceIdFromMask(t)
           if (
             (n.classs && n.classs !== WH.Wow.Item.CLASS_ARMOR) ||
@@ -8408,8 +8410,8 @@ WH.Tooltips =
           ) {
             a = undefined
           }
-          let i = Listview.funcBox.getCurrentItemBonuses.call(this, n)
-          let s = g_items.getAppearance(n.id, i)
+          const i = Listview.funcBox.getCurrentItemBonuses.call(this, n)
+          const s = g_items.getAppearance(n.id, i)
           if (s && s[0]) {
             e = s[0]
           }
@@ -8446,8 +8448,8 @@ WH.Tooltips =
       return null
     }
     function He() {
-      let e = document.documentElement
-      let t = document.body
+      const e = document.documentElement
+      const t = document.body
       return Math.max(
         t.offsetHeight,
         t.scrollHeight,
@@ -8491,12 +8493,12 @@ WH.Tooltips =
     }
     function Se() {
       if ($.elements.tooltip) {
-        let e = $.elements.tooltip
+        const e = $.elements.tooltip
         $.showingTooltip = false
         e.style.display = 'none'
         Ve(e, false)
         $.elements.tooltipTable.className = ''
-        let t = (e.whttHeightCap || {}).innerScroll
+        const t = (e.whttHeightCap || {}).innerScroll
         if (t) {
           Z(e, t)
         }
@@ -8526,8 +8528,8 @@ WH.Tooltips =
           break
       }
       if (r === 'tiny') {
-        let s = i.getGame(n)
-        let r = a.getIconUrl(o, a.TINY, s)
+        const s = i.getGame(n)
+        const r = a.getIconUrl(o, a.TINY, s)
         j(e, ['icontinyl'])
         e.dataset.game = t.getKey(s)
         e.dataset.type = i.getStringId(n)
@@ -8573,7 +8575,7 @@ WH.Tooltips =
       if (!window.createPopup) {
         document.head.appendChild(WH.ct(''))
       }
-      let a = document.styleSheets[document.styleSheets.length - 1]
+      const a = document.styleSheets[document.styleSheets.length - 1]
       for (var i in e) {
         if (!e.hasOwnProperty(i) || !e[i]) {
           continue
@@ -8591,7 +8593,7 @@ WH.Tooltips =
     }
     function _e() {
       if (!$.mobileScrollInitialized) {
-        let e = function (e) {
+        const e = function (e) {
           if ($.usingScreen) {
             if (
               !document
@@ -8628,7 +8630,7 @@ WH.Tooltips =
       return f[e].mobile
     }
     function Ae(t, a, i, n) {
-      let s = e.getEntity(t, a, i, n)
+      const s = e.getEntity(t, a, i, n)
       s.status = P
       if (
         $.show.type === t &&
@@ -8643,32 +8645,32 @@ WH.Tooltips =
       if (!$.elements.tooltip) {
         return
       }
-      let r = $.elements.tooltip
+      const r = $.elements.tooltip
       r.style.left = '-1000px'
       r.style.top = '-1000px'
       r.style.width = null
       r.style.maxWidth = W + 'px'
-      let o = r.getBoundingClientRect().width
-      let l = $.elements.tooltip2
+      const o = r.getBoundingClientRect().width
+      const l = $.elements.tooltip2
       l.style.left = '-1000px'
       l.style.top = '-1000px'
       l.style.width = null
       l.style.maxWidth = W + 'px'
-      let c = $.showSecondary ? l.getBoundingClientRect().width : 0
+      const c = $.showSecondary ? l.getBoundingClientRect().width : 0
       r.style.maxWidth = null
       l.style.maxWidth = null
       r.style.width = o ? o + 'px' : 'auto'
       l.style.width = c + 'px'
       if (e || t) {
-        let e = r.whttHeightCap
-        let t = (e || {}).maxHeight || window.innerHeight
+        const e = r.whttHeightCap
+        const t = (e || {}).maxHeight || window.innerHeight
         let a = (e || {}).innerScroll
         if (r.offsetHeight >= t) {
           if ((a = a || WH.qs('.whtt-scroll', r))) {
             r.dataset.height = 'restricted'
             r.style.maxHeight = t + 'px'
             if (!e) {
-              let e = r.scrollHeight - r.offsetHeight
+              const e = r.scrollHeight - r.offsetHeight
               a.style.maxHeight = a.scrollHeight - e + 'px'
               r.whttHeightCap = { innerScroll: a, maxHeight: r.offsetHeight }
             }
@@ -8681,7 +8683,7 @@ WH.Tooltips =
       }
       let d, f
       for (let r = 0, o = b.length; r < o; ++r) {
-        let o = b[r]
+        const o = b[r]
         d = Re(e, t, a, i, n, s, o.right, o.top)
         if (WH.WAS && !WH.WAS.intersect(d)) {
           f = true
@@ -8706,14 +8708,14 @@ WH.Tooltips =
     function Re(e, t, a, i, n, s, r, o) {
       let l = e
       let c = t
-      let d = $.elements.tooltip
-      let f = $.elements.tooltip.getBoundingClientRect()
-      let u = f.width
-      let p = f.height
-      let h = $.elements.tooltip2.getBoundingClientRect()
-      let g = $.showSecondary ? h.width : 0
-      let m = $.showSecondary ? h.height : 0
-      let W = WH.getWindowSize()
+      const d = $.elements.tooltip
+      const f = $.elements.tooltip.getBoundingClientRect()
+      const u = f.width
+      const p = f.height
+      const h = $.elements.tooltip2.getBoundingClientRect()
+      const g = $.showSecondary ? h.width : 0
+      const m = $.showSecondary ? h.height : 0
+      const W = WH.getWindowSize()
       let H = WH.getScroll()
       let E = H.x
       let T = H.y
@@ -8774,7 +8776,7 @@ WH.Tooltips =
         return
       }
       f = []
-      let u = e.getEntity(n, fe(n, o, l), t, a)
+      const u = e.getEntity(n, fe(n, o, l), t, a)
       if (u.data.name) {
         f.push(
           Menu.createItem({
@@ -8801,7 +8803,7 @@ WH.Tooltips =
           }),
         )
       }
-      let h = r[s] || s
+      const h = r[s] || s
       if (WH.markup.tags[h]) {
         let e = ''
         if (n === WH.Types.SPELL) {
@@ -8973,7 +8975,7 @@ WH.Tooltips =
       }
     }
     function xe(e, a) {
-      let i = { dataEnv: WH.getDataEnv(), locale: Locale.getId() }
+      const i = { dataEnv: WH.getDataEnv(), locale: Locale.getId() }
       let n
       if (a) {
         n = a.toLowerCase()
@@ -8983,8 +8985,8 @@ WH.Tooltips =
       if (n !== undefined) {
         i.dataEnv = WH.dataEnv.MAIN
         i.locale = 0
-        let e = n.split('.')
-        let a = WH.getLocaleFromDomain.L[e[0]]
+        const e = n.split('.')
+        const a = WH.getLocaleFromDomain.L[e[0]]
         if (a) {
           i.locale = a
           e.shift()
@@ -9012,7 +9014,7 @@ WH.Tooltips =
     function Be(t, a, n, s) {
       switch (s.type) {
         case i.AZERITE_ESSENCE_POWER:
-          let r = e.getEntity(s.type, s.fullId, s.dataEnv, s.locale)
+          const r = e.getEntity(s.type, s.fullId, s.dataEnv, s.locale)
           if (s.params.spec && !(s.params.know && s.params.know.length)) {
             st.getSpellsBySpec(s.params.spec, function (e) {
               t = t.replace(/<!--embed:([^>]+)-->/g, function (t, a) {
@@ -9052,15 +9054,15 @@ WH.Tooltips =
     }
     function Fe(e, a, i, n, s) {
       if (!$.elements.tooltip) {
-        let e = ee()
+        const e = ee()
         $.elements.icon = e.icon
         $.elements.logo = e.logo
-        let t = e.tooltip
+        const t = e.tooltip
         t.style.left = t.style.top = '-2323px'
         $.elements.tooltip = t
         $.elements.tooltipTable = WH.gE(t, 'table')[0]
         $.elements.tooltipTd = WH.gE(t, 'td')[0]
-        let a = ee(undefined, true).tooltip
+        const a = ee(undefined, true).tooltip
         a.style.left = a.style.top = '-2323px'
         $.elements.tooltip2 = a
         $.elements.tooltipTable2 = WH.gE(a, 'table')[0]
@@ -9068,13 +9070,13 @@ WH.Tooltips =
       }
       K($.elements.tooltip, e, a, s)
       K($.elements.tooltip2, e, a, s)
-      let r = i === true ? 'fixed' : 'absolute'
+      const r = i === true ? 'fixed' : 'absolute'
       $.elements.tooltip.style.position = r
       $.elements.tooltip2.style.position = r
-      let o = n || document.fullscreenElement || document.body
+      const o = n || document.fullscreenElement || document.body
       WH.ae(o, $.elements.tooltip)
       WH.ae(o, $.elements.tooltip2)
-      let l = t.getByEnv(e)
+      const l = t.getByEnv(e)
       if (l !== t.get()) {
         WH.Fonts.load(l)
       }
@@ -9087,7 +9089,7 @@ WH.Tooltips =
           id: 'wowhead-tooltip-screen',
           className: 'wowhead-tooltip-screen',
         })
-        let e = WH.ce('a', {
+        const e = WH.ce('a', {
           id: 'wowhead-tooltip-screen-close',
           className: 'wowhead-tooltip-screen-close',
           onclick: WH.Tooltips.clearTouchTooltip,
@@ -9096,7 +9098,7 @@ WH.Tooltips =
           id: 'wowhead-tooltip-screen-inner-wrapper',
           className: 'wowhead-tooltip-screen-inner-wrapper',
         })
-        let t = WH.ce('div', {
+        const t = WH.ce('div', {
           id: 'wowhead-tooltip-screen-inner',
           className: 'wowhead-tooltip-screen-inner',
         })
@@ -9124,7 +9126,7 @@ WH.Tooltips =
         if (t === undefined && e.length < 30) {
           t = true
         }
-        let i = []
+        const i = []
         if (t) {
           i.push(' class="no-wrap"')
         }
@@ -9139,7 +9141,7 @@ WH.Tooltips =
     }
     function qe(t, a, s, r, o, l) {
       var c = fe(t, a, l)
-      let d = e.getEntity(t, c, s, r)
+      const d = e.getEntity(t, c, s, r)
       if (d.status !== D && d.status !== P) {
         return
       }
@@ -9245,12 +9247,12 @@ WH.Tooltips =
       ) {
         st.fetch(i.SPELL, s)
       }
-      let h = u.length ? '?' + u.join('&') : ''
-      let g =
+      const h = u.length ? '?' + u.join('&') : ''
+      const g =
         WH.isDataEnvRestricted(WH.getDataEnv()) || WH.isEntityRestricted(t)
           ? ve()
           : ve(n)
-      let m = g + '/tooltip/' + de(t) + '/' + a + h
+      const m = g + '/tooltip/' + de(t) + '/' + a + h
       WH.xhrJsonRequest(
         m,
         function (t, a, i, n, s, r) {
@@ -9300,7 +9302,7 @@ WH.Tooltips =
           o = a.getAttribute('data-wowhead')
         }
       } catch (e) {}
-      let l = a.href
+      const l = a.href
       if (
         (!l.length && !o) ||
         (o && /^np\b/.test(o)) ||
@@ -9312,7 +9314,7 @@ WH.Tooltips =
       if (/(?:^|\.)wow(?:classic)?db\.com$/.test(new URL(l).hostname)) {
         return N
       }
-      let c =
+      const c =
         /^https?:\/\/(?:[^/]+\.)?(classic|tbc)\.(?:[^/]+\.)?wowhead\.com\/talent-calc\/embed\/[^#]+/
       let f = l.match(c)
       if (!f) {
@@ -9322,13 +9324,13 @@ WH.Tooltips =
       }
       if (WH.REMOTE && f) {
         let e = 513
-        let t = 750
+        const t = 750
         if (f[1] === 'tbc') {
           e += 120
         } else if (f[1] === 'wotlk') {
           e += 517
         }
-        let i = (e / t) * 100 + '%'
+        const i = (e / t) * 100 + '%'
         a.parentNode.replaceChild(
           WH.ce(
             'div',
@@ -9369,8 +9371,8 @@ WH.Tooltips =
         )
         return O
       }
-      let p = /^https?:\/\/(?:[^/]+\.)?wowhead\.com\/soulbind-calc\/embed\/.+/
-      let h = l.match(p)
+      const p = /^https?:\/\/(?:[^/]+\.)?wowhead\.com\/soulbind-calc\/embed\/.+/
+      const h = l.match(p)
       if (WH.REMOTE && h) {
         a.parentNode.replaceChild(
           WH.ce(
@@ -9413,9 +9415,9 @@ WH.Tooltips =
         return O
       }
       if (WH.REMOTE) {
-        let e =
+        const e =
           /^https?:\/\/(?:[^/]+\.)?wowhead\.com\/(?:(?:ptr|ptr-2|beta)\/)?(?:\w\w\/)?talent-calc\/embed\/.+/
-        let t = l.match(e)
+        const t = l.match(e)
         if (t) {
           a.parentNode.replaceChild(
             WH.ce(
@@ -9453,9 +9455,9 @@ WH.Tooltips =
           return O
         }
       }
-      let g =
+      const g =
         /^https?:\/\/(?:[^/]+\.)?wowhead\.com\/diablo-2\/skill-calc\/embed\/.+/
-      let m = l.match(g)
+      const m = l.match(g)
       if (WH.REMOTE && m) {
         a.parentNode.replaceChild(
           WH.ce(
@@ -9493,7 +9495,7 @@ WH.Tooltips =
         )
         return O
       }
-      let W = {}
+      const W = {}
       $.show.params = W
       let b
       let w
@@ -9511,7 +9513,7 @@ WH.Tooltips =
           P = l
         } else {
           C.some((e) => {
-            let t =
+            const t =
               l.match(e.regexGuidePaths) ||
               (u[e.treeId].length &&
                 (l.match(e.regexFrontPaths) || l.match(e.regexLegacyPaths)))
@@ -9541,7 +9543,7 @@ WH.Tooltips =
           }
         })
         e = [...new Set(e)]
-        let t = o.match(
+        const t = o.match(
           new RegExp('(' + e.join('|') + ').?(-?\\d+(?:\\.\\d+)?)'),
         )
         if (t) {
@@ -9553,7 +9555,7 @@ WH.Tooltips =
       if (!w) {
         return N
       }
-      let x = _[w]
+      const x = _[w]
       if (z && !r && !we(x)) {
         return N
       }
@@ -9592,9 +9594,9 @@ WH.Tooltips =
         }
       }
       if (W['crafted-stats'] && W['crafted-stats'].length > 0) {
-        let e = []
+        const e = []
         for (let t = 0; t < Math.min(2, W['crafted-stats'].length); t++) {
-          let a = parseInt(W['crafted-stats'][t])
+          const a = parseInt(W['crafted-stats'][t])
           if (!isNaN(a)) {
             e.push(a)
           }
@@ -9641,10 +9643,10 @@ WH.Tooltips =
         }
       }
       $.element = a
-      let Q = xe(b, W.domain)
+      const Q = xe(b, W.domain)
       let J = Q.dataEnv
-      let X = Q.locale
-      let Z = WH.Types.getRequiredTrees(x) || []
+      const X = Q.locale
+      const Z = WH.Types.getRequiredTrees(x) || []
       if (Z.length && !Z.includes(WH.getDataTree(J))) {
         J = WH.getRootByTree(Z[0])
       }
@@ -9718,7 +9720,7 @@ WH.Tooltips =
       if (n || !We()) {
         return O
       }
-      let ne = e.getEntity(x, fe(x, A, W), J, X)
+      const ne = e.getEntity(x, fe(x, A, W), J, X)
       var se = []
       if (
         (me('renameLinks') &&
@@ -9829,8 +9831,8 @@ WH.Tooltips =
         $.showSecondary = false
       }
       if (WH.Device.isTouch()) {
-        let e = $.showSecondary ? $.elements.tooltipTd2 : $.elements.tooltipTd
-        let t = WH.ce('a')
+        const e = $.showSecondary ? $.elements.tooltipTd2 : $.elements.tooltipTd
+        const t = WH.ce('a')
         t.href = 'javascript:'
         t.className = 'wowhead-touch-tooltip-closer'
         t.onclick = WH.Tooltips.clearTouchTooltip
@@ -9893,7 +9895,7 @@ WH.Tooltips =
       if (a) {
         t = it(t, a)
       }
-      let n = e.getBoundingClientRect()
+      const n = e.getBoundingClientRect()
       Fe(
         i.dataEnv,
         i.type,
@@ -9954,7 +9956,7 @@ WH.Tooltips =
       a = a || {}
       Ue()
       WH.ee($.elements.screenCaption)
-      let i = WH.ce('a', {
+      const i = WH.ce('a', {
         innerHTML: WH.isRemote() ? 'Tap Link' : WH.TERMS.taplink,
         onclick: function (e, t) {
           e.setAttribute('data-disable-wowhead-tooltip', 'true')
@@ -9965,7 +9967,7 @@ WH.Tooltips =
               new MouseEvent(t, { bubbles: true, cancelable: true }),
             )
           } else {
-            let a = document.createEvent('Events')
+            const a = document.createEvent('Events')
             a.initEvent(t, true, true)
             e.dispatchEvent(a)
           }
@@ -9975,7 +9977,7 @@ WH.Tooltips =
           WH.Tooltips.clearTouchTooltip()
         }.bind(null, e, 'click'),
       })
-      let n = WH.ce('i', { className: 'fa fa-hand-o-up' })
+      const n = WH.ce('i', { className: 'fa fa-hand-o-up' })
       WH.aef(i, n)
       WH.ae($.elements.screenCaption, i)
       Fe(a.dataEnv, a.type, false, $.elements.screenInnerBox, a.status)
@@ -9991,7 +9993,7 @@ WH.Tooltips =
         $.show.locale === n
       ) {
         tt(k, n, ge(n, 'loading'))
-        let s = e.getEntity(t, a, i, n)
+        const s = e.getEntity(t, a, i, n)
         s.timer = setTimeout(Ae.bind(this, t, a, i, n), 3850)
       }
     }
@@ -10013,7 +10015,7 @@ WH.Tooltips =
         t = x
         d = a.UNKNOWN
       } else if ($.show.params) {
-        let e = $.show.params
+        const e = $.show.params
         if (WH.reforgeStats && e.forg && WH.reforgeStats[e.forg]) {
           var y = WH.reforgeStats[e.forg]
           var _ = [y.i1]
@@ -10071,14 +10073,14 @@ WH.Tooltips =
                 '<a href="[^"]*?/item=(\\d+)[^"]*">(.+?)</a></span>',
             )
             if ((A = s.match(N))) {
-              let t = !isNaN(parseInt($.show.locale))
+              const t = !isNaN(parseInt($.show.locale))
                 ? m[$.show.locale]
                 : 'enus'
               var O =
                 WH.isSet('g_items') && g_items[e.pcs[w]]
                   ? g_items[e.pcs[w]]['name_' + t]
                   : A[4]
-              let a = WH.REMOTE
+              const a = WH.REMOTE
                 ? 'javascript:'
                 : WH.Entity.getUrl(WH.Types.ITEM, A[3])
               var D = '<a href="' + a + '">' + O + '</a>'
@@ -10106,7 +10108,7 @@ WH.Tooltips =
         if (e.lvl && !e.ilvl) {
           s = WH.setTooltipLevel(s, e.lvl ? e.lvl : WH.maxLevel, e.buff)
         }
-        let t = []
+        const t = []
         if (e.spellModifier) {
           t.push(e.spellModifier)
         }
@@ -10161,7 +10163,7 @@ WH.Tooltips =
         let a = WH.isRetailTree($.show.dataEnv)
           ? WH.User.Completion.getByType($.show.type)
           : false
-        let n = e.getEntity(
+        const n = e.getEntity(
           $.show.type,
           $.show.fullId,
           $.show.dataEnv,
@@ -10172,7 +10174,7 @@ WH.Tooltips =
             a = false
           }
         }
-        let r = !(
+        const r = !(
           a &&
           $.show.type in g_completion_categories &&
           WH.inArray(
@@ -10188,7 +10190,7 @@ WH.Tooltips =
             if (!(U.id in a)) {
               continue
             }
-            let e = WH.inArray(a[U.id], o) !== -1
+            const e = WH.inArray(a[U.id], o) !== -1
             if (!e && !r) {
               continue
             }
@@ -10201,7 +10203,7 @@ WH.Tooltips =
         }
         if (!WH.isRetailTree($.show.dataEnv) && $.show.type === i.QUEST) {
           for (var G, w = 0; (G = g_user.characterProfiles[w]); w++) {
-            let e = WH.inArray(G.quests, o) !== -1
+            const e = WH.inArray(G.quests, o) !== -1
             if (!e && !r) {
               continue
             }
@@ -10213,7 +10215,7 @@ WH.Tooltips =
         }
         if (WH.isRetailTree($.show.dataEnv) && $.show.type === i.TRANSMOG_SET) {
           ;(g_user.lists || []).forEach(function (e) {
-            let t = WH.Wow.TransmogSet.getCompletionAmount(
+            const t = WH.Wow.TransmogSet.getCompletionAmount(
               n.data.completionData || {},
               e.id,
             )
@@ -10235,11 +10237,11 @@ WH.Tooltips =
         [i.TRANSMOG_SET, i.ITEM_SET].includes($.show.type) &&
         typeof WH.getPreferredTransmogRace !== 'undefined'
       ) {
-        let e = WH.getPreferredTransmogRace()
+        const e = WH.getPreferredTransmogRace()
         let t = e.race
-        let a = e.gender - 1
-        let n = WH.ce('div', { innerHTML: s })
-        let r = WH.qs('picture', n)
+        const a = e.gender - 1
+        const n = WH.ce('div', { innerHTML: s })
+        const r = WH.qs('picture', n)
         if (r) {
           if (
             r.dataset.requiredRace &&
@@ -10247,7 +10249,7 @@ WH.Tooltips =
           ) {
             t = r.dataset.requiredRace
           }
-          let e =
+          const e =
             $.show.type === i.ITEM_SET ? WH.Wow.ItemSet : WH.Wow.TransmogSet
           r.parentNode.replaceChild(
             WH.ce('img', {
@@ -10273,7 +10275,7 @@ WH.Tooltips =
       if ($.show.params.map && f && f.getMap) {
         h = f.getMap()
       }
-      let q = function (e, t, a) {
+      const q = function (e, t, a) {
         if (
           $.show.type !== t.type ||
           $.show.fullId !== t.fullId ||
@@ -10368,7 +10370,7 @@ WH.Tooltips =
           $.elements.logo.style.display = $.show.hasLogo ? 'block' : 'none'
         }
       }
-      let z = {
+      const z = {
         type: $.show.type,
         fullId: $.show.fullId,
         dataEnv: $.show.dataEnv,
@@ -10378,7 +10380,7 @@ WH.Tooltips =
       Be(s, u, q.bind(this, t, z), z)
     }
     function at() {
-      let t = e.getEntity(
+      const t = e.getEntity(
         $.show.type,
         $.show.fullId,
         $.show.dataEnv,
@@ -10390,7 +10392,7 @@ WH.Tooltips =
       }
       let a = t.data[pe($.show.params['image'])]
       let i = t.data['image' + $.show.params['image'] + '_class']
-      let n = he($.show.type, $.show.fullId, $.show.dataEnv)
+      const n = he($.show.type, $.show.fullId, $.show.dataEnv)
       if (n) {
         a = n[0]
         i = n[1]
@@ -10409,7 +10411,7 @@ WH.Tooltips =
       )
     }
     function it(e, t) {
-      let a = WH.ce('div', { className: t })
+      const a = WH.ce('div', { className: t })
       if (typeof e === 'string') {
         a.innerHTML = e
       } else {
@@ -10429,9 +10431,9 @@ WH.Tooltips =
         return 'enus'
       },
     }
-    let st = new (function () {
+    const st = new (function () {
       const e = this
-      let t = { loadedData: {} }
+      const t = { loadedData: {} }
       var a = {}
       var s = {}
       var r = {}
@@ -10465,7 +10467,7 @@ WH.Tooltips =
       }
       this.getDataByKey = (e, a) => (t.loadedData[e] || {})[a]
       this.getSpellsBySpec = function (e, t) {
-        let a = $.show.dataEnv || WH.getDataEnv()
+        const a = $.show.dataEnv || WH.getDataEnv()
         this.registerCallback(i.PLAYER_CLASS, a, function () {
           var n = r[i.PLAYER_CLASS][a]
           var s = []
@@ -10500,7 +10502,7 @@ WH.Tooltips =
         a[e][t] = a[e][t] || []
         r[e][t] = i
         c()
-        let n = a[e][t]
+        const n = a[e][t]
         while (n.length) {
           n.shift()()
         }
@@ -10519,8 +10521,8 @@ WH.Tooltips =
         }
       }
       function c() {
-        let e = $.show.dataEnv || WH.getDataEnv()
-        let a = r[i.ITEM][e]
+        const e = $.show.dataEnv || WH.getDataEnv()
+        const a = r[i.ITEM][e]
         if (a) {
           t.loadedData[i.ITEM] = a
           WH.staminaFactor = a.staminaByIlvl
@@ -10532,7 +10534,7 @@ WH.Tooltips =
           WH.applyStatModifications.ScalingData = a.scalingData
           WH.contentTuningLevels = a.contentTuningLevels
         }
-        let n = r[i.SPELL][e]
+        const n = r[i.SPELL][e]
         if (n) {
           t.loadedData[i.SPELL] = n
           WH.convertScalingSpell.SV = n.scalingValue
@@ -10658,9 +10660,9 @@ WH.DI.UiImage = function (e) {
   }
   this.getSubDirectory = function () {
     let e = ''
-    let t = n.baseName.split('_')
+    const t = n.baseName.split('_')
     while (t.length > 1) {
-      let a = t.shift()
+      const a = t.shift()
       if (/\d/.test(a)) {
         break
       }

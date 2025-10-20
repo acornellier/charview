@@ -45,14 +45,14 @@ export function CharInput({ setParses }: Props) {
 
     try {
       const res = await fetchWclParses({ region, realmSlug, name })
-      if ('errors' in res) {
-        console.log(`API Error:`, res)
-        setError(null)
-        setValidationErrors(res.errors)
-      } else {
-        setParses(res)
+      if (res.status === 'success') {
+        setParses(res.data)
         setError(null)
         setValidationErrors({})
+      } else {
+        console.log(`API Error:`, res)
+        setError(res.type === 'validation' ? null : res.message)
+        setValidationErrors(res.errors ?? {})
       }
     } catch (error: any) {
       console.error(`Unhandled error:`, error)
@@ -100,43 +100,50 @@ export function CharInput({ setParses }: Props) {
             </Command>
           </PopoverContent>
         </Popover>
-        <Popover open={realmOpen} onOpenChange={setRealmOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              className="w-[200px] justify-between"
-              disabled={realms === undefined}
-            >
-              {realms?.find(({ slug }) => slug === realmSlug)?.name ??
-                'Select a realm'}
-              <ChevronDownIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Select a realm..." />
-              <CommandList>
-                <CommandGroup>
-                  {realms
-                    ?.toSorted((a, b) => a.name.localeCompare(b.name))
-                    .map((r) => (
-                      <CommandItem
-                        key={r.slug}
-                        value={r.slug}
-                        onSelect={(value) => {
-                          setRealmSlug(value)
-                          setRealmOpen(false)
-                        }}
-                      >
-                        {r.name}
-                      </CommandItem>
-                    ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+        <div>
+          <Popover open={realmOpen} onOpenChange={setRealmOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                className="w-[200px] justify-between"
+                disabled={realms === undefined}
+              >
+                {realms?.find(({ slug }) => slug === realmSlug)?.name ??
+                  'Select a realm'}
+                <ChevronDownIcon />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0">
+              <Command>
+                <CommandInput placeholder="Select a realm..." />
+                <CommandList>
+                  <CommandGroup>
+                    {realms
+                      ?.toSorted((a, b) => a.name.localeCompare(b.name))
+                      .map((r) => (
+                        <CommandItem
+                          key={r.slug}
+                          value={r.slug}
+                          onSelect={(value) => {
+                            setRealmSlug(value)
+                            setRealmOpen(false)
+                          }}
+                        >
+                          {r.name}
+                        </CommandItem>
+                      ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          {validationErrors['realmSlug'] && (
+            <p className="text-sm text-red-600 max-w-[200px]">
+              {validationErrors['realmSlug'].join(', ')}
+            </p>
+          )}
+        </div>
         <div className="flex flex-col">
           <Input
             className="w-[200px]"

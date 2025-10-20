@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use RuntimeException;
 
 class BnetRealmController extends Controller
@@ -27,7 +27,10 @@ class BnetRealmController extends Controller
       },
     );
 
-    return response()->json($realms);
+    return response()->json([
+      'status' => 'success',
+      'data' => $realms,
+    ]);
   }
 
   private function getRealms(string $region)

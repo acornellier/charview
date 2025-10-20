@@ -1,6 +1,5 @@
-import type { PhpError, Rarity } from '@/lib/types'
+import type { PhpResponse, Rarity, WclCharRequestType } from '@/lib/types'
 import type { WowClass } from '@/lib/classes'
-import type { WclCharRequest } from '@/schema'
 
 export interface Gem {
   id: string
@@ -39,13 +38,11 @@ export interface WclParse {
   total: number
 }
 
-type Response = WclParse[]
-
 export async function fetchWclParses({
   region,
   realmSlug,
   name,
-}: WclCharRequest): Promise<Response | PhpError> {
+}: WclCharRequestType): Promise<PhpResponse<WclParse[]>> {
   return await fetch(
     `/api/wclchar?region=${region}&realmSlug=${realmSlug}&name=${name}`,
   ).then(async (res) => {

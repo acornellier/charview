@@ -16,10 +16,21 @@ class WclCharController extends Controller
 
     if ($response->failed()) {
       $json = json_decode($response->body());
-      return response()->json($json->error, $json->status);
+
+      return response()->json(
+        [
+          'status' => 'error',
+          'message' => "WCL Error: {$json->error}",
+          'errors' => [],
+        ],
+        $json->status,
+      );
     }
 
-    return $response->json();
+    return response()->json([
+      'status' => 'success',
+      'data' => $response->json(),
+    ]);
   }
 
   private function buildUrl($name, $realmSlug, $region)

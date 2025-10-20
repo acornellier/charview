@@ -15,8 +15,8 @@ class WclCharRequest extends FormRequest
   {
     return [
       'name' => ['required', 'string', 'min:2'],
-      'realmSlug' => ['required', 'string'],
-      'region' => ['required', 'string'],
+      'realmSlug' => ['required', 'string', 'min:1'],
+      'region' => ['required', 'string', 'min:2', 'max:2'],
     ];
   }
 }

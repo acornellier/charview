@@ -1,8 +1,8 @@
 import { CharInput } from '@/components/CharInput'
 import type { WclParse } from '@/api/wclChar'
 import { ParseView } from '@/components/ParseView'
-import { useLocalStorage } from '@/lib/useLocalStorage'
 import { ModeToggle } from '@/components/ModeToggle'
+import { useLocalStorage } from '@/lib/useLocalStorage'
 
 export function App() {
   const [parses, setParses] = useLocalStorage<WclParse[] | undefined>(

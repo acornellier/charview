@@ -17,7 +17,6 @@ interface Props {
 
 export function ParseView({ parse }: Props) {
   const classColor = classColors[parse.class] || '#FFFFFF'
-  console.log(parse)
 
   return (
     <div className="flex flex-col gap-1">
@@ -54,8 +53,8 @@ export function ParseView({ parse }: Props) {
         <TableBody>
           {parse.gear
             .filter((item) => item.id !== 0)
-            .map((item) => (
-              <TableRow key={item.id}>
+            .map((item, idx) => (
+              <TableRow key={idx}>
                 <td className="text-end px-2 py-0.5">{item.itemLevel}</td>
                 <td className="px-2 py-0.5">
                   <a
