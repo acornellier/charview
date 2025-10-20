@@ -28,23 +28,36 @@ export function CharInput({ setParses }: Props) {
   const [realmOpen, setRealmOpen] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string[]>
+  >({})
 
   const [region, setRegion] = useLocalStorage<Region>('region', 'US')
   const [realmSlug, setRealmSlug] = useLocalStorage<string>('realm', 'zuljin')
   const [name, setName] = useLocalStorage<string>('name', 'Ortemist')
-  const dataComplete = region && realmSlug && name
+  const dataComplete = true
 
   const { data: realms } = useRealms(region)
 
   const handleClick = async () => {
     if (!dataComplete) return
     setLoading(true)
+
     try {
-      const parses = await fetchWclParses({ region, realmSlug, name })
-      setParses(parses)
-      setError(null)
+      const res = await fetchWclParses({ region, realmSlug, name })
+      if ('errors' in res) {
+        console.log(`API Error:`, res)
+        setError(null)
+        setValidationErrors(res.errors)
+      } else {
+        setParses(res)
+        setError(null)
+        setValidationErrors({})
+      }
     } catch (error: any) {
-      setError(error)
+      console.error(`Unhandled error:`, error)
+      setError(`Unhandled error: ${error.message}`)
+      setValidationErrors({})
     } finally {
       setLoading(false)
     }
@@ -124,11 +137,18 @@ export function CharInput({ setParses }: Props) {
             </Command>
           </PopoverContent>
         </Popover>
-        <Input
-          className="w-[200px]"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="flex flex-col">
+          <Input
+            className="w-[200px]"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {validationErrors['name'] && (
+            <p className="text-sm text-red-600 max-w-[200px]">
+              {validationErrors['name'].join(', ')}
+            </p>
+          )}
+        </div>
         <Button
           onClick={handleClick}
           disabled={loading || !dataComplete}

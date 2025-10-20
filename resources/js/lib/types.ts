@@ -18,3 +18,9 @@ export const rarityColors: Record<Rarity, string> = {
   legendary: '#ff8000',
   artifact: '#e6cc80',
 }
+
+export interface PhpError {
+  status: 'error'
+  message: string
+  errors: Record<string, string[]>
+}

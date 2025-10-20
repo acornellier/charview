@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
   ->withRouting(
@@ -14,6 +16,26 @@ return Application::configure(basePath: dirname(__DIR__))
     //
   })
   ->withExceptions(function (Exceptions $exceptions): void {
-    //
+    $exceptions->render(function (ValidationException $e) {
+      \Illuminate\Support\Facades\Log::info('valid bad');
+      return response()->json(
+        [
+          'status' => 'error',
+          'message' => 'Validation failed',
+          'errors' => $e->errors(),
+        ],
+        422,
+      );
+    });
+
+    $exceptions->render(function (HttpExceptionInterface $e) {
+      return response()->json(
+        [
+          'status' => 'error',
+          'message' => $e->getMessage() ?: 'Unknown error',
+        ],
+        $e->getStatusCode(),
+      );
+    });
   })
   ->create();

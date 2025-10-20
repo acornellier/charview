@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WclCharRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class WclCharController extends Controller
 {
-  public function index()
+  public function index(WclCharRequest $request)
   {
-    $name = $_GET['name'];
-    $realmSlug = $_GET['realmSlug'];
-    $region = $_GET['region'];
-
-    $url = $this->buildUrl($name, $realmSlug, $region);
+    $v = $request->validated();
+    $url = $this->buildUrl($v['name'], $v['realmSlug'], $v['region']);
     $response = Http::get($url);
 
     if ($response->failed()) {

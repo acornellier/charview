@@ -17,6 +17,7 @@ interface Props {
 
 export function ParseView({ parse }: Props) {
   const classColor = classColors[parse.class] || '#FFFFFF'
+  console.log(parse)
 
   return (
     <div className="flex flex-col gap-1">
@@ -72,12 +73,12 @@ export function ParseView({ parse }: Props) {
                     {item.gems?.map((gem, idx) => (
                       <a
                         key={idx}
-                        className="flex gap-1 cursor-pointer"
+                        className="flex cursor-pointer"
                         href={`https://www.wowhead.com/item=${gem.id}`}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        {'‎ '}
+                        <span className="text-transparent">{'_'}</span>
                       </a>
                     ))}
                   </div>

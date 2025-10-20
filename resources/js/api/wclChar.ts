@@ -1,4 +1,4 @@
-import type { Rarity, Region } from '@/lib/types'
+import type { PhpError, Rarity, Region } from '@/lib/types'
 import type { WowClass } from '@/lib/classes'
 
 export interface Gem {
@@ -50,11 +50,10 @@ export async function fetchWclParses({
   region,
   realmSlug,
   name,
-}: Props): Promise<Response> {
+}: Props): Promise<Response | PhpError> {
   return await fetch(
     `/api/wclchar?region=${region}&realmSlug=${realmSlug}&name=${name}`,
   ).then(async (res) => {
-    if (res.ok) return res.json()
-    else throw await res.json()
+    return await res.json()
   })
 }
