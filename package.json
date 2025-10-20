@@ -5,12 +5,14 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "lint": "eslint resources/js"
+    "lint": "eslint resources/js",
+    "zodgen": "laravel-zodgen"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "@7nohe/laravel-zodgen": "0.2.2",
     "@prettier/plugin-php": "0.24.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "24.8.1",
