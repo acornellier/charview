@@ -45,7 +45,9 @@ Navigate to http://localhost:8000/
 
 - Backend
   - Laravel 12
-  - Realms fetching using Blizzard API. Cached.
+  - Realms fetching using Blizzard API
+    - OAuth, cached token
+    - Cached realms response
   - WCL parses fetching using WarcraftLogs API.
   - Schema validation
   - Exception handling
@@ -61,3 +63,6 @@ Navigate to http://localhost:8000/
   - Light/dark mode
   - Wowhead links
   - Local storage for all inputs and parse
+- Linting
+    - Prettier for all files
+    - Eslint for frontend
